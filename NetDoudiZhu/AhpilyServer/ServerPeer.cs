@@ -31,13 +31,16 @@ namespace AhpilyServer
             try
             {
                 serverPeer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                acceptSemaphore = new Semaphore(maxCount,maxCount);
+                acceptSemaphore = new Semaphore(maxCount, maxCount);
                 //在连接之前就调用客户端线程池 初始化
                 clientPeerPool = new ClientPeerPool(maxCount);
                 ClientPeer clientPeer = null;
                 for (int i = 0; i < maxCount; i++)
                 {
                     clientPeer = new ClientPeer();
+                    clientPeer.receiveArgs.Completed += Receive_Complete;
+                    clientPeer.receiveCompleted = ReceiveCompleted;
+                    clientPeer.sendDisConnected = DisConnectd;
                     clientPeerPool.Enqueue(clientPeer);
                 }
 
@@ -70,26 +73,24 @@ namespace AhpilyServer
                 e = new SocketAsyncEventArgs();
                 e.Completed += Accept_Completed;
             }
-            
-            //限制线程的访问    计数。 假设客户端100个  每调用一次加一。等到100就等待 有位置就继续
-            acceptSemaphore.WaitOne(); 
 
-
-           bool result = serverPeer.AcceptAsync(e); //返回值是bool类型，判断事情是否执行完毕。
-                                                    //返回true，表示正在执行,执行完毕后触发一个事件。
-                                                    //返回false,表示已经执行完毕，直接处理。
+            bool result = serverPeer.AcceptAsync(e); //返回值是bool类型，判断事情是否执行完毕。
+                                                     //返回true，表示正在执行,执行完毕后触发一个事件。
+                                                     //返回false,表示已经执行完毕，直接处理。
             if (result == false)
             {
                 ProcessAccept(e);
             }
         }
-        private void Accept_Completed(object sender,SocketAsyncEventArgs e)
+        private void Accept_Completed(object sender, SocketAsyncEventArgs e)
         {
             ProcessAccept(e);
         }
 
         private void ProcessAccept(SocketAsyncEventArgs e)
         {
+            ///限制线程的访问    计数。 假设客户端100个  每调用一次加一。等到100就等待 有位置就继续
+            acceptSemaphore.WaitOne();
             //得到客户端的对象
             //1,原始方法
             //Socket socket = e.AcceptSocket;
@@ -98,8 +99,10 @@ namespace AhpilyServer
             //clientPeer.SetSocket(e.AcceptSocket);
             //3,
             ClientPeer clientPeer = clientPeerPool.Dequeue();
-            clientPeer.SetSocket(e.AcceptSocket);
+            clientPeer.clientSocket = e.AcceptSocket;
 
+            //开始接收数据
+            StartReceive(clientPeer);
             //继续进行处理
             //一直进行接收客户端发来的数据  伪循环
             e.AcceptSocket = null;
@@ -107,13 +110,116 @@ namespace AhpilyServer
         }
         #endregion
 
-        #region 断开连接
-        #endregion
-
-        #region 发送数据
-        #endregion
-
         #region    接收数据
+        /// <summary>
+        /// 开始接受数据
+        /// </summary>
+        /// <param name="client"></param>
+        private void StartReceive(ClientPeer client)
+        {
+            try
+            {
+                bool result = client.clientSocket.ReceiveAsync(client.receiveArgs);
+                if (result == false)
+                {
+                    ProcessReceive(client.receiveArgs);
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 处理接收的请求
+        /// </summary>
+        /// <param name="e"></param>
+        private void ProcessReceive(SocketAsyncEventArgs e)
+        {
+            ClientPeer client = e.UserToken as ClientPeer;   //userToken  获得与此异步套接字操作相关的用户或应用程序
+
+            //判断网络消息是否接收成功
+            if (client.receiveArgs.SocketError == SocketError.Success && client.receiveArgs.BytesTransferred > 0)
+            {
+                //拷贝数据
+                byte[] packet = new byte[client.receiveArgs.BytesTransferred];
+                Buffer.BlockCopy(client.receiveArgs.Buffer, 0, packet, 0, client.receiveArgs.BytesTransferred);
+                //客户端自身处理数据包
+                client.StartReceive(packet);
+
+                //尾递归
+                StartReceive(client);
+            }
+            //断开连接  没有传输的字节数
+            else if (client.receiveArgs.BytesTransferred == 0)
+            {
+                //客户端主动断开
+                if (client.receiveArgs.SocketError == SocketError.Success)
+                {
+                    DisConnectd(client,"客户端主动断开");
+                }
+                //网络异常导致
+                else
+                {
+                    DisConnectd(client,e.SocketError.ToString());
+                }
+            }
+        }
+        /// <summary>
+        /// 当接收完成时 触发的事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Receive_Complete(object sender, SocketAsyncEventArgs e)
+        {
+            ProcessReceive(e);
+        }
+
+        /// <summary>
+        /// 一条数据解析完成的处理
+        /// </summary>
+        /// <param name="client">对应的连接对象</param>
+        /// <param name="sender">解析出来的一个具体能使用的类型</param>
+
+        private void ReceiveCompleted(ClientPeer client,SocketMsg msg)
+        {
+            //给应用层(应用程序 program)使用、
+            //TODO
+        }
+
         #endregion
+
+        #region 断开连接
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <param name="client">断开的连接对象</param>
+        /// <param name="reason">断开的原因</param>
+        public void DisConnectd(ClientPeer client,string reason)
+        {
+            try
+            {
+                //清空一些数据
+                if (client == null)
+                {
+                    throw new Exception("当前客户端对象为空，无法断开");
+                }
+                client.Disconnected();
+                //回收对象
+                clientPeerPool.Enqueue(client);
+
+                acceptSemaphore.Release();
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
+
     }
 }
