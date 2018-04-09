@@ -14,8 +14,28 @@ namespace AhpilyServer
     /// </summary>
     public class ServerPeer
     {
+
         private Socket serverPeer;
+
+        /// <summary>
+        /// 客户端连接池
+        /// </summary>
         ClientPeerPool clientPeerPool;
+
+        /// <summary>
+        /// 应用层
+        /// </summary>
+        IApplication app;
+
+        /// <summary>
+        /// 设置应用层
+        /// </summary>
+        /// <param name="app"></param>
+        public void SetApplication(IApplication app)
+        {
+            this.app = app;
+        }
+
         /// <summary>
         /// 限制客户端连接数量的信号量
         /// </summary>
@@ -187,7 +207,7 @@ namespace AhpilyServer
         private void ReceiveCompleted(ClientPeer client,SocketMsg msg)
         {
             //给应用层(应用程序 program)使用、
-            //TODO
+            app.OnReceive(client,msg);
         }
 
         #endregion
@@ -203,10 +223,14 @@ namespace AhpilyServer
             try
             {
                 //清空一些数据
-                if (client == null)
+                if (client == null) 
                 {
                     throw new Exception("当前客户端对象为空，无法断开");
                 }
+
+                //通知应用层 这个客户断开连接
+                app.DisConnected(client);
+
                 client.Disconnected();
                 //回收对象
                 clientPeerPool.Enqueue(client);

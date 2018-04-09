@@ -96,7 +96,9 @@ namespace AhpilyServer
             //数据清空
             dataCache.Clear();
             isReceiveProcess = false;
-            //TODO 给发送数据哪里预留
+
+            sendQueue.Clear();
+            isSendProcess = false;
 
             clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();

@@ -1,4 +1,6 @@
 ﻿using System;
+using AhpilyServer;
+
 
 namespace GameServer
 {
@@ -6,7 +8,10 @@ namespace GameServer
     {
         static void Main(string[] args)
         {
-            
+            ServerPeer serverPeer = new ServerPeer();
+            serverPeer.Start(8860,10);
+
+            Console.ReadKey();
         }
     }
 }

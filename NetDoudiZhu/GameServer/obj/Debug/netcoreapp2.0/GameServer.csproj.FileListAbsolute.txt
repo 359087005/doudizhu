@@ -1,0 +1,13 @@
+E:\doudizhuProject\NetDoudiZhu\GameServer\obj\Debug\netcoreapp2.0\GameServer.csproj.CoreCompileInputs.cache
+E:\doudizhuProject\NetDoudiZhu\GameServer\obj\Debug\netcoreapp2.0\GameServer.AssemblyInfoInputs.cache
+E:\doudizhuProject\NetDoudiZhu\GameServer\obj\Debug\netcoreapp2.0\GameServer.AssemblyInfo.cs
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\GameServer.deps.json
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\GameServer.runtimeconfig.json
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\GameServer.runtimeconfig.dev.json
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\GameServer.dll
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\GameServer.pdb
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\AhpilyServer.dll
+E:\doudizhuProject\NetDoudiZhu\GameServer\bin\Debug\netcoreapp2.0\AhpilyServer.pdb
+E:\doudizhuProject\NetDoudiZhu\GameServer\obj\Debug\netcoreapp2.0\GameServer.csprojResolveAssemblyReference.cache
+E:\doudizhuProject\NetDoudiZhu\GameServer\obj\Debug\netcoreapp2.0\GameServer.dll
+E:\doudizhuProject\NetDoudiZhu\GameServer\obj\Debug\netcoreapp2.0\GameServer.pdb
