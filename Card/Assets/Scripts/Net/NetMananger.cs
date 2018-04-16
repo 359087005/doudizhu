@@ -8,7 +8,7 @@ public class NetMananger : ManagerBase
     public static NetMananger instance = null;
 
 
-    private ClientPeer client = new ClientPeer("172.0.0.1",8860);
+    private ClientPeer client = new ClientPeer("127.0.0.1",8860);
 
     public void Connected()
     {

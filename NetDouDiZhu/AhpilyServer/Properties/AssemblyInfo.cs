@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("AhpilyServer")]
+[assembly: AssemblyTitle("NetDouDiZhu")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AhpilyServer")]
+[assembly: AssemblyProduct("NetDouDiZhu")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("0416d0d3-3895-4b21-86b4-55ef017526d5")]
+[assembly: Guid("3df38118-3195-49c0-a686-38a1d95f6483")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Protocol
 {
-   public class OpCode
+    public class OpCode
     {
         public const int ACCOUNT = 0;
     }
