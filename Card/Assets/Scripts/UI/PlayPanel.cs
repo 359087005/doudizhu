@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PlayPanel : UIBase {
 
     private Button startBtn;
@@ -15,16 +16,17 @@ public class PlayPanel : UIBase {
 
         startBtn.onClick.AddListener(StartBtnClick);
         RegisterBtn.onClick.AddListener(RegistBtnClick);
+
     }
 
     void StartBtnClick()
     {
-
+        Dispatch(AreaCode.UI,UIEvent.START_PANEL_ACTICE,true);
     }
 
     void RegistBtnClick()
     {
-
+        Dispatch(AreaCode.UI, UIEvent.REGIST_PANEL_ACTICE, true);
     }
 
 

@@ -1,9 +1,0 @@
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\obj\Debug\netcoreapp2.0\AhpilyServer.csproj.CoreCompileInputs.cache
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\obj\Debug\netcoreapp2.0\AhpilyServer.AssemblyInfoInputs.cache
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\obj\Debug\netcoreapp2.0\AhpilyServer.AssemblyInfo.cs
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\obj\Debug\netcoreapp2.0\AhpilyServer.csprojResolveAssemblyReference.cache
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\bin\Debug\netcoreapp2.0\AhpilyServer.deps.json
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\bin\Debug\netcoreapp2.0\AhpilyServer.dll
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\bin\Debug\netcoreapp2.0\AhpilyServer.pdb
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\obj\Debug\netcoreapp2.0\AhpilyServer.dll
-E:\doudizhuProject\NetDoudiZhu\AhpilyServer\obj\Debug\netcoreapp2.0\AhpilyServer.pdb

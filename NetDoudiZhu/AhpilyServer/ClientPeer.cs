@@ -11,12 +11,13 @@ namespace AhpilyServer
     /// <summary>
     /// 这里并不是客户端 而是当客户端连接到服务器时  服务器保存的客户端连接的socket
     /// </summary>
-   public class ClientPeer
+    public class ClientPeer
     {
         public ClientPeer()
         {
             this.receiveArgs = new SocketAsyncEventArgs();
             this.receiveArgs.UserToken = this;
+            this.receiveArgs.SetBuffer(new byte[1024], 0, 1024);
             this.sendArgs = new SocketAsyncEventArgs();
             this.sendQueue = new Queue<byte[]>();
 
@@ -64,14 +65,14 @@ namespace AhpilyServer
                 ProcessReceive();
         }
 
-       /// <summary>
-       /// 处理接收的数据
-       /// </summary>
+        /// <summary>
+        /// 处理接收的数据
+        /// </summary>
         private void ProcessReceive()
         {
             isReceiveProcess = true;
 
-           byte[] data =  EncoderTool.DeconderPacket(ref dataCache);
+            byte[] data = EncoderTool.DeconderPacket(ref dataCache);
 
             if (data == null)
             {
@@ -84,8 +85,8 @@ namespace AhpilyServer
             SocketMsg msg = EncoderTool.DeCodeMsg(data);
             //回调给上层
             if (receiveCompleted != null)
-                receiveCompleted(this,msg);
-            //尾递归
+                receiveCompleted(this, msg);
+            //尾递归 
             ProcessReceive();
         }
 
@@ -127,7 +128,7 @@ namespace AhpilyServer
         /// <param name="value"></param>
         public void Send(int opCode, int subCode, object value)
         {
-            SocketMsg msg = new SocketMsg(opCode,subCode,value);
+            SocketMsg msg = new SocketMsg(opCode, subCode, value);
             byte[] data = EncoderTool.EncodeMsg(msg);
             byte[] packet = EncoderTool.EnconderPacket(data);
 
@@ -148,8 +149,8 @@ namespace AhpilyServer
             //取出一条数据
             byte[] packet = sendQueue.Dequeue();
             //设置消息 发送的异步套接字 操作     的发送数据缓冲区
-            sendArgs.SetBuffer(packet,0,packet.Length);
-            bool result =  clientSocket.SendAsync(sendArgs);
+            sendArgs.SetBuffer(packet, 0, packet.Length);
+            bool result = clientSocket.SendAsync(sendArgs);
             if (result == false)
             {
                 SendComplete();
@@ -165,7 +166,7 @@ namespace AhpilyServer
             if (sendArgs.SocketError != SocketError.Success)
             {
                 //客户端断开连接
-                sendDisConnected(this,sendArgs.SocketError.ToString());
+                sendDisConnected(this, sendArgs.SocketError.ToString());
             }
             else
             {
@@ -184,7 +185,7 @@ namespace AhpilyServer
         //解决方案：1，定长。2，简单文件协议。头尾加特殊字符。3，消息头消息尾。头：消息的长度 尾：具体的消息（使用第三种）
         void Test()
         {
-            byte[] bt =  Encoding.Default.GetBytes("12345");
+            byte[] bt = Encoding.Default.GetBytes("12345");
             int length = bt.Length;
             byte[] bt1 = BitConverter.GetBytes(length);
             //bt1 + bt  即发送的消息

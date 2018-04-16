@@ -44,4 +44,9 @@ public class UIBase : MonoBase
     {
         MsgCenter._Instance.DisPatch(areaCode, eventCode, message);
     }
+
+    protected void SetPanelActive(bool active)
+    {
+        gameObject.SetActive(active);
+    }
 }

@@ -12,7 +12,7 @@ namespace AhpilyServer
     /// <summary>
     /// 单线程池
     /// </summary>
-   public class SingleExecute
+    public class SingleExecute
     {
         /// <summary>
         /// 互斥锁
@@ -32,9 +32,9 @@ namespace AhpilyServer
         {
             lock (this)
             {
-               // mutex.WaitOne();
+                // mutex.WaitOne();
                 executeDelegate();
-               // mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
         }
     }

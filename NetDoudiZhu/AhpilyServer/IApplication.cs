@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AhpilyServer
 {
-   public interface IApplication
+    public interface IApplication
     {
         /// <summary>
         /// 断开连接

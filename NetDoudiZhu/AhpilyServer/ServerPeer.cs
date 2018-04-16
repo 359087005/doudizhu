@@ -74,6 +74,7 @@ namespace AhpilyServer
             {
 
                 Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -107,6 +108,9 @@ namespace AhpilyServer
             ProcessAccept(e);
         }
 
+        /// <summary>
+        /// 处理连接请求
+        /// </summary>
         private void ProcessAccept(SocketAsyncEventArgs e)
         {
             ///限制线程的访问    计数。 假设客户端100个  每调用一次加一。等到100就等待 有位置就继续
@@ -121,6 +125,7 @@ namespace AhpilyServer
             ClientPeer clientPeer = clientPeerPool.Dequeue();
             clientPeer.clientSocket = e.AcceptSocket;
 
+            Console.WriteLine("连接的客户端:" + clientPeer.clientSocket.RemoteEndPoint.ToString());
             //开始接收数据
             StartReceive(clientPeer);
             //继续进行处理
@@ -149,7 +154,7 @@ namespace AhpilyServer
             catch (Exception e)
             {
 
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message); throw;
             }
         }
 
@@ -179,12 +184,12 @@ namespace AhpilyServer
                 //客户端主动断开
                 if (client.receiveArgs.SocketError == SocketError.Success)
                 {
-                    DisConnectd(client,"客户端主动断开");
+                    DisConnectd(client, "客户端主动断开");
                 }
                 //网络异常导致
                 else
                 {
-                    DisConnectd(client,e.SocketError.ToString());
+                    DisConnectd(client, e.SocketError.ToString());
                 }
             }
         }
@@ -204,10 +209,10 @@ namespace AhpilyServer
         /// <param name="client">对应的连接对象</param>
         /// <param name="sender">解析出来的一个具体能使用的类型</param>
 
-        private void ReceiveCompleted(ClientPeer client,SocketMsg msg)
+        private void ReceiveCompleted(ClientPeer client, SocketMsg msg)
         {
             //给应用层(应用程序 program)使用、
-            app.OnReceive(client,msg);
+            app.OnReceive(client, msg);
         }
 
         #endregion
@@ -218,19 +223,19 @@ namespace AhpilyServer
         /// </summary>
         /// <param name="client">断开的连接对象</param>
         /// <param name="reason">断开的原因</param>
-        public void DisConnectd(ClientPeer client,string reason)
+        public void DisConnectd(ClientPeer client, string reason)
         {
             try
             {
                 //清空一些数据
-                if (client == null) 
+                if (client == null)
                 {
                     throw new Exception("当前客户端对象为空，无法断开");
                 }
 
                 //通知应用层 这个客户断开连接
                 app.DisConnected(client);
-
+                Console.WriteLine(client.clientSocket.RemoteEndPoint.ToString() + "已断开连接" + reason);
                 client.Disconnected();
                 //回收对象
                 clientPeerPool.Enqueue(client);
@@ -241,6 +246,7 @@ namespace AhpilyServer
             {
 
                 Console.WriteLine(e.Message);
+                throw;
             }
         }
         #endregion

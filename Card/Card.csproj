@@ -76,6 +76,9 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>D:/_Unity_EXE/Unity2017/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="Test">
+      <HintPath>Assets/Plugins/Test.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Audio\AudioBase.cs" />
@@ -86,11 +89,16 @@
     <Compile Include="Assets\Scripts\FrameWork\ManagerBase.cs" />
     <Compile Include="Assets\Scripts\FrameWork\MonoBase.cs" />
     <Compile Include="Assets\Scripts\FrameWork\MsgCenter.cs" />
+    <Compile Include="Assets\Scripts\Net\ClientPeer.cs" />
+    <Compile Include="Assets\Scripts\Net\EnconderTool.cs" />
+    <Compile Include="Assets\Scripts\Net\NetMananger.cs" />
+    <Compile Include="Assets\Scripts\Net\SocketMsg.cs" />
     <Compile Include="Assets\Scripts\PaoWuLine\ParabolaRay.cs" />
     <Compile Include="Assets\Scripts\UI\PlayPanel.cs" />
     <Compile Include="Assets\Scripts\UI\RegisterPanel.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UIEvent.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
