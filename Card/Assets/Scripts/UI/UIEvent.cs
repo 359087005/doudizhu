@@ -7,4 +7,6 @@ public class UIEvent  {
     public const int START_PANEL_ACTICE = 0;
     public const int REGIST_PANEL_ACTICE = 1;
 
+
+    public const int PROMPTA_ANIM = int.MaxValue;
 }

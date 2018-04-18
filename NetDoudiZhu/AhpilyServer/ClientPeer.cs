@@ -16,10 +16,10 @@ namespace AhpilyServer
         public ClientPeer()
         {
             this.receiveArgs = new SocketAsyncEventArgs();
-            this.receiveArgs.UserToken = this;
             this.receiveArgs.SetBuffer(new byte[1024], 0, 1024);
+            this.receiveArgs.UserToken = this;
             this.sendArgs = new SocketAsyncEventArgs();
-            this.sendQueue = new Queue<byte[]>();
+           
 
             this.sendArgs.Completed += SendArgs_Completed;
         }
@@ -83,6 +83,7 @@ namespace AhpilyServer
             //TODO 需要再次转成一个具体的类型供使用
 
             SocketMsg msg = EncoderTool.DeCodeMsg(data);
+
             //回调给上层
             if (receiveCompleted != null)
                 receiveCompleted(this, msg);
@@ -109,7 +110,7 @@ namespace AhpilyServer
         /// <summary>
         /// 发送的消息的队列
         /// </summary>
-        private Queue<byte[]> sendQueue;
+        private Queue<byte[]> sendQueue  = new Queue<byte[]>();
         /// <summary>
         /// 发送的异步套接字对象
         /// </summary>

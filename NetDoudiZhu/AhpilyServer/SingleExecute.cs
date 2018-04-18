@@ -14,15 +14,30 @@ namespace AhpilyServer
     /// </summary>
     public class SingleExecute
     {
+        private static SingleExecute instance = null;
+        public static SingleExecute Instance
+        {
+            get
+            {
+                lock (o)
+                {
+                    if (instance == null)
+                        instance = new SingleExecute();
+                    return instance;
+                }
+            }
+        }
+
+        private static string o = "aaa";
         /// <summary>
         /// 互斥锁
         /// </summary>
-        //Mutex mutex;
+        Mutex mutex;
 
-        //public SingleExecute()
-        //{
-        //    mutex = new Mutex();
-        //}
+        private SingleExecute()
+        {
+            mutex = new Mutex();
+        }
 
         /// <summary>
         /// 单线程处理逻辑
@@ -32,9 +47,9 @@ namespace AhpilyServer
         {
             lock (this)
             {
-                // mutex.WaitOne();
+                mutex.WaitOne();
                 executeDelegate();
-                // mutex.ReleaseMutex();
+                mutex.ReleaseMutex();
             }
         }
     }

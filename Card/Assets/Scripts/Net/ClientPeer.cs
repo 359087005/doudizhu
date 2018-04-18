@@ -44,7 +44,7 @@ public class ClientPeer
     //一旦接收到数据  就存到缓存区
     private List<byte> dataCache = new List<byte>();
 
-    bool isProgressReceive = false;
+    bool isProcessReceive = false;
 
     public Queue<SocketMsg> socketMsgQueue = new Queue<SocketMsg>();
     /// <summary>
@@ -52,12 +52,12 @@ public class ClientPeer
     /// </summary>
     private void StartReceive()
     {
-        if (socket == null && socket.Connected)
+        if (socket == null && socket.Connected == false)
         {
             Debug.LogError("连接未成功...");
             return;
         }
-        socket.BeginReceive(receiveBytes, 0, receiveBytes.Length, SocketFlags.None, ReceiveCallBack, socket);
+        socket.BeginReceive(receiveBytes, 0, 1024, SocketFlags.None, ReceiveCallBack, socket);
     }
     /// <summary>
     /// 收到消息之后 的回调
@@ -72,22 +72,28 @@ public class ClientPeer
 
             //处理收到的消息
             dataCache.AddRange(tmpByteArray);
-            if (isProgressReceive == false)
+            if (isProcessReceive == false)
                 ProcessReceive();
+
+            StartReceive();
         }
+        
         catch (Exception e)
         {
             Debug.LogError(e.Message);
         }
     }
+    /// <summary>
+    /// 处理收到的消息
+    /// </summary>
     private void ProcessReceive()
     {
-        isProgressReceive = true;
+        isProcessReceive = true;
 
         byte[] data = EncoderTool.DeconderPacket(ref dataCache);
         if (data == null)
         {
-            isProgressReceive = false;
+            isProcessReceive = false;
             return;
         }
         //TODO 需要再次转成一个具体的类型供使用
@@ -96,6 +102,8 @@ public class ClientPeer
 
         //存储消息等待处理
         socketMsgQueue.Enqueue(msg);
+
+       
         //尾递归
         ProcessReceive();
 
@@ -106,6 +114,10 @@ public class ClientPeer
     public void Send(int opCode, int subCode, object value)
     {
         SocketMsg msg = new SocketMsg(opCode, subCode, value);
+        Send(msg);
+    }
+    public void Send(SocketMsg msg)
+    {
         byte[] data = EncoderTool.EncodeMsg(msg);
         byte[] packet = EncoderTool.EnconderPacket(data);
 

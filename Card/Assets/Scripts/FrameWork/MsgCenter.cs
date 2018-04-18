@@ -16,6 +16,7 @@ public class MsgCenter : MonoBase
         gameObject.AddComponent<UIManager>();
         gameObject.AddComponent<NetMananger>();
         gameObject.AddComponent<CharacterManager>();
+        gameObject.AddComponent<SceneMgr>();
     }
 
     public void DisPatch(int areaCode,int eventCode,object message)
@@ -36,7 +37,9 @@ public class MsgCenter : MonoBase
             case AreaCode.UI:
                 UIManager._Instance.Execute(eventCode, message);
                 break;
-
+            case AreaCode.SCENE:
+                SceneMgr._Instance.Execute(eventCode,message);
+                break;
 
             default:
                 break;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-
+using Protocol.Dto;
 
 namespace AhpilyServer
 {
@@ -174,7 +174,6 @@ namespace AhpilyServer
                 Buffer.BlockCopy(client.receiveArgs.Buffer, 0, packet, 0, client.receiveArgs.BytesTransferred);
                 //客户端自身处理数据包
                 client.StartReceive(packet);
-
                 //尾递归
                 StartReceive(client);
             }
@@ -212,6 +211,8 @@ namespace AhpilyServer
         private void ReceiveCompleted(ClientPeer client, SocketMsg msg)
         {
             //给应用层(应用程序 program)使用、
+            AccountDto dto =  msg.value as AccountDto;
+            
             app.OnReceive(client, msg);
         }
 
