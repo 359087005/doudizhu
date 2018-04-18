@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -101,10 +99,14 @@
     <Compile Include="Assets\Scripts\Scene\Msg\LoadSceneMsg.cs" />
     <Compile Include="Assets\Scripts\Scene\SceneEvent.cs" />
     <Compile Include="Assets\Scripts\Scene\SceneMgr.cs" />
+    <Compile Include="Assets\Scripts\UI\CreatPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\InfoPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\MatchPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Msg\PromptMsg.cs" />
     <Compile Include="Assets\Scripts\UI\PlayPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\PromptPanle.cs" />
+    <Compile Include="Assets\Scripts\UI\PromptPanel.cs" />
     <Compile Include="Assets\Scripts\UI\RegisterPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\SetPanel.cs" />
     <Compile Include="Assets\Scripts\UI\StartPanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIEvent.cs" />

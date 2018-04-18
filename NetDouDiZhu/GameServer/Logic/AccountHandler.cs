@@ -42,8 +42,6 @@ namespace GameServer.Logic
                         }
                         break;
                 }
-            
-            
         }
         /// <summary>
         /// 注册
@@ -73,7 +71,7 @@ namespace GameServer.Logic
                     client.Send(OpCode.ACCOUNT, AccountCode.REGIST_SRES, -3);
                     return;//密码不合法
                 }
-
+                
                 accountCache.Creat(account, password);
                 //client.Send(OpCode.ACCOUNT, AccountCode.REGIST_SRES, "注册成功");
                 client.Send(OpCode.ACCOUNT, AccountCode.REGIST_SRES, 0);

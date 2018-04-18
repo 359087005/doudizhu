@@ -18,7 +18,7 @@ public class MsgCenter : MonoBase
         gameObject.AddComponent<CharacterManager>();
         gameObject.AddComponent<SceneMgr>();
     }
-
+    
     public void DisPatch(int areaCode,int eventCode,object message)
     {
         switch (areaCode)
