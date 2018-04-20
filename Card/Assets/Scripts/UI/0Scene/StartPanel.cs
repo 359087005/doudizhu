@@ -63,6 +63,7 @@ public class StartPanel : UIBase
         AccountDto dto = new AccountDto(textID.text, textPasword.text);
         socketMsg.Change(OpCode.ACCOUNT, AccountCode.LOGIN, dto);
         Dispatch(AreaCode.NET, 0, socketMsg);
+        Debug.Log("StartPanel...");
         //ClearText();
     }
     void CloseClick()

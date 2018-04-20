@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Protocol;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,8 @@ public class MatchPanel : UIBase
     private Text textDes;
     private Button btnCancel;
     private Button btnEnter;
+
+    private SocketMsg socketMsg;
     void Start()
     {
         btnMatch = transform.Find("BtnMatch").GetComponent<Button>();
@@ -32,7 +35,7 @@ public class MatchPanel : UIBase
         textDes = transform.Find("TextDes").GetComponent<Text>();
         btnCancel = transform.Find("BtnCancel").GetComponent<Button>();
         btnEnter = transform.Find("BtnEnter").GetComponent<Button>();
-
+        socketMsg = new SocketMsg();
         btnMatch.onClick.AddListener(BtnMathchClick);
         btnCancel.onClick.AddListener(BtnCancelClick);
         btnEnter.onClick.AddListener(BtnEnterClick);
@@ -87,17 +90,22 @@ public class MatchPanel : UIBase
     
     private void BtnMathchClick()
     {
-        //TODO
+        //发起匹配请求  也可以穿过去一个id，假如客户端保存了自身账号ID 发消息的时候可以吧自身ID 发过去，然后服务器端进行判断ID是否与client对应ID一致
+        socketMsg.Change(OpCode.MATCH,MatchCode.ENTER_CREQ,null);
+        Dispatch(AreaCode.NET,0,socketMsg);
+
         SetObjectActive(true);
       
     }
     private void BtnCancelClick()
     {
-        //TODO
+        socketMsg.Change(OpCode.MATCH, MatchCode.LEAVE_CREQ, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
         SetObjectActive(false);
     }
+
     private void BtnEnterClick()
     {
-        //TODO
+        Dispatch(AreaCode.SCENE,SceneEvent.LOAD_SCENE,2);
     }
 }

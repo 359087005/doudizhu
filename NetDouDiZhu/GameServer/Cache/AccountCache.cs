@@ -120,6 +120,7 @@ namespace GameServer.Cache
             string account = clientAccDict[client];
             AccountModel model = accModelDict[account];
             return model.id;
+            
         }
 
     }

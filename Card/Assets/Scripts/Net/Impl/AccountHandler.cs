@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-
+/// <summary>
+/// 账户网络消息处理类
+/// </summary>
 public class AccountHandler : HandlerBase
 {
     public override void OnReceive(int subCode, object value)
@@ -34,8 +36,9 @@ public class AccountHandler : HandlerBase
                 LoadSceneMsg msg = new LoadSceneMsg(1,
                     delegate ()
                 {
-                    //todo
-                    Debug.Log("加载完成");
+                    //向服务器获取信息
+                    SocketMsg socketMsg = new SocketMsg(OpCode.USER,UserCode.GET_INFO_CREQ,null);
+                    Dispatch(AreaCode.NET,0, socketMsg);
                 });
                 Dispatch(AreaCode.SCENE,SceneEvent.LOAD_SCENE,msg);
                 break;

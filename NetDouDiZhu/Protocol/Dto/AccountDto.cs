@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+/// <summary>
+/// 账户数据的传输模型
+/// </summary>
 namespace Protocol.Dto
 {
 

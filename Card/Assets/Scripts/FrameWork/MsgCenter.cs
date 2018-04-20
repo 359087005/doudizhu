@@ -17,6 +17,8 @@ public class MsgCenter : MonoBase
         gameObject.AddComponent<NetMananger>();
         gameObject.AddComponent<CharacterManager>();
         gameObject.AddComponent<SceneMgr>();
+
+        DontDestroyOnLoad(this);
     }
     
     public void DisPatch(int areaCode,int eventCode,object message)

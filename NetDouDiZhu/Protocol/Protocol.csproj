@@ -40,8 +40,13 @@
   <ItemGroup>
     <Compile Include="AccountCode.cs" />
     <Compile Include="Dto\AccountDto.cs" />
+    <Compile Include="Dto\Fight\CardDto.cs" />
+    <Compile Include="Dto\MatchRoomDto.cs" />
+    <Compile Include="Dto\UserDto.cs" />
+    <Compile Include="MatchCode.cs" />
     <Compile Include="OpCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserCode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

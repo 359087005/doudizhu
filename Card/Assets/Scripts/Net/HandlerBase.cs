@@ -11,7 +11,7 @@ public abstract class HandlerBase
     public abstract void OnReceive(int subCode,object value);
 
     protected void Dispatch(int areaCode, int eventCode, object message)
-    {
+    { 
         MsgCenter._Instance.DisPatch(areaCode,eventCode,message);
     }
 }

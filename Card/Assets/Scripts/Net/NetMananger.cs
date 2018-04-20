@@ -52,17 +52,24 @@ public class NetMananger : ManagerBase
     #region 处理收到的服务器发来的消息
 
     HandlerBase accountHandler = new AccountHandler();
+    HandlerBase userHandler = new UserHandler();
+    HandlerBase matchHandler = new MatchHandler();
     /// <summary>
     /// 接收网络发来的消息
     /// </summary>
     /// <param name="msg"></param>
     private void ReceiveSocketMsg(SocketMsg msg)
     {
-        UnityEngine.Debug.Log("NetManager_SubCode: " + msg.subCode);
         switch (msg.opCode)
         {
             case OpCode.ACCOUNT:
                 accountHandler.OnReceive(msg.subCode,msg.value);
+                break;
+            case OpCode.USER:
+                userHandler.OnReceive(msg.subCode,msg.value);
+                break;
+            case OpCode.MATCH:
+                matchHandler.OnReceive(msg.subCode, msg.value);
                 break;
         }
     }

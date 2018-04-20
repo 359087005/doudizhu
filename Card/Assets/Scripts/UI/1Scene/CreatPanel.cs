@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Protocol;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class CreatPanel : UIBase
 
     public override void Execute(int eventCode, object message)
     {
+        Debug.Log("CreatPanel...");
         switch (eventCode)
         {
             case UIEvent.CREAT_PANEL_ACTIVE:
@@ -22,12 +24,15 @@ public class CreatPanel : UIBase
 
     private Button btnCreat;
     private InputField inputName;
-    PromptMsg msg;
+    PromptMsg msg = new PromptMsg();
+    SocketMsg socketmsg = new SocketMsg();
     void Start ()
     {
         btnCreat = transform.Find("BtnCreat").GetComponent<Button>();
         inputName = transform.Find("InputName").GetComponent<InputField>();
         msg = new PromptMsg();
+
+        btnCreat.onClick.AddListener(BtnCreatClick);
     }
 
     void BtnCreatClick()
@@ -38,7 +43,14 @@ public class CreatPanel : UIBase
             Dispatch(AreaCode.UI,UIEvent.PROMPTA_ANIM,msg);
             return;
         }
-        //TODO
+        //  向服务器发起创建请求
+        socketmsg.Change(OpCode.USER,UserCode.CREAT_CREQ,inputName.text);
+        Dispatch(AreaCode.NET,0,socketmsg);
     }
 
+    public override void Destroy()
+    {
+        base.Destroy();
+        btnCreat.onClick.RemoveListener(BtnCreatClick);
+    }
 }

@@ -133,6 +133,10 @@ namespace AhpilyServer
             byte[] data = EncoderTool.EncodeMsg(msg);
             byte[] packet = EncoderTool.EnconderPacket(data);
 
+            Send(packet);
+        }
+        public void Send(byte[] packet)
+        {
             sendQueue.Enqueue(packet);
             if (!isSendProcess)
                 Send();

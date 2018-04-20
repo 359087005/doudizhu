@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Protocol.Dto;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,8 @@ public class InfoPanel : UIBase
         switch (eventCode)
         {
             case UIEvent.REFRESH_INFO_PANEL:
-                //Refresh(); TODO
+                UserDto dto = message as UserDto;
+                Refresh(dto.name,dto.lv,dto.exp,dto.been); 
                 break;
             default:
                 break;
