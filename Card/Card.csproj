@@ -110,7 +110,9 @@
     <Compile Include="Assets\Scripts\UI\1Scene\InfoPanel.cs" />
     <Compile Include="Assets\Scripts\UI\1Scene\MatchPanel.cs" />
     <Compile Include="Assets\Scripts\UI\1Scene\SetPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\2Scene\BottomPanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\LeftStatePanel.cs" />
+    <Compile Include="Assets\Scripts\UI\2Scene\MyStatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\RightStatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\StatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\UpPanel.cs" />

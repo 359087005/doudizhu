@@ -5,6 +5,46 @@ using UnityEngine.UI;
 using Protocol.Dto;
 public class StatePanel : UIBase 
 {
+    protected virtual void Awake()
+    {
+        Bind(UIEvent.PLAYER_READY, UIEvent.PLAYER_HIDE_STATE, UIEvent.PLAYER_LEAVE, UIEvent.PLAYER_ENTER);
+    }
+    public override void Execute(int eventCode, object message)
+    {
+        switch (eventCode)
+        {
+            case UIEvent.PLAYER_READY:
+                {
+                    if (dto == null) break;
+                    int userId = (int)message;
+                    if (userId == dto.id)
+                        ReadyState();
+                    break;
+                }
+            case UIEvent.PLAYER_HIDE_STATE:
+                {
+                    textReady.gameObject.SetActive(false);
+                    break;
+                }
+            case UIEvent.PLAYER_LEAVE:
+                {
+                    if (dto == null) break;
+                    int userId = (int)message;
+                    if (userId == dto.id)
+                        SetPanelActive(false);
+                    break;
+                }
+            case UIEvent.PLAYER_ENTER:
+                {
+                    if (dto == null) break;
+                    int userId = (int)message;
+                    if (userId == dto.id)
+                        SetPanelActive(true);
+                    break;
+                }
+        }
+    }
+
     /// <summary>
     /// 角色数据
     /// </summary>
@@ -25,6 +65,12 @@ public class StatePanel : UIBase
         textReady.gameObject.SetActive(false);
         imgChat.gameObject.SetActive(false);
     }
+    
+    protected virtual void ReadyState()
+    {
+        textReady.gameObject.SetActive(true);
+    }
+
     /// <summary>
     /// 设置身份 是农民还是地主   
     /// 0 是农民 1 是地主

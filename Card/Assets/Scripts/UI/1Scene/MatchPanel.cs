@@ -106,6 +106,6 @@ public class MatchPanel : UIBase
 
     private void BtnEnterClick()
     {
-        Dispatch(AreaCode.SCENE,SceneEvent.LOAD_SCENE,2);
+        Dispatch(AreaCode.SCENE,SceneEvent.LOAD_SCENE,new LoadSceneMsg(2,null));
     }
 }

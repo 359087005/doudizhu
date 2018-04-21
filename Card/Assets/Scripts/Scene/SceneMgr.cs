@@ -51,6 +51,7 @@ public class SceneMgr : ManagerBase
         if (OnSceneLoad != null)
         {
             OnSceneLoad();
+            OnSceneLoad = null;
         }
     }
 }

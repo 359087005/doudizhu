@@ -82,6 +82,7 @@ namespace GameServer.Logic
                
                 );
         }
+
         private MatchRoomDto GetMatchRoomDto(MatchRoom room)
         {
             MatchRoomDto dto = new MatchRoomDto();
@@ -89,7 +90,10 @@ namespace GameServer.Logic
             {
                 UserModel model = userCache.GetModelByUserId(uid);
                 UserDto userdto = new UserDto(model.id,model.name, model.been, model.lv, model.exp, model.winCount, model.loseCount, model.runCount);
+
                 dto.uIdUserDtoDict.Add(uid, userdto);
+                dto.uIdList.Add(uid);
+                //能否直接使用dto.Add(userdto); //否则此方法意义？
             }
             dto.readyUIdList = room.readyIdList;
 
