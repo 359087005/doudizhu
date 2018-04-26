@@ -82,9 +82,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Audio\AudioBase.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioEffect.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioEvent.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\Character\CardCtrl.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterBase.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterEvent.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterManager.cs" />
+    <Compile Include="Assets\Scripts\Character\LeftPlayerControl.cs" />
+    <Compile Include="Assets\Scripts\Character\MyPlayerControl.cs" />
+    <Compile Include="Assets\Scripts\Character\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\Character\RightPlayerControl.cs" />
     <Compile Include="Assets\Scripts\FrameWork\AreaCode.cs" />
     <Compile Include="Assets\Scripts\FrameWork\ManagerBase.cs" />
     <Compile Include="Assets\Scripts\FrameWork\MonoBase.cs" />
@@ -95,6 +103,8 @@
     <Compile Include="Assets\Scripts\Net\EnconderTool.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
     <Compile Include="Assets\Scripts\Net\Impl\AccountHandler.cs" />
+    <Compile Include="Assets\Scripts\Net\Impl\ChatHandler.cs" />
+    <Compile Include="Assets\Scripts\Net\Impl\FightHandler.cs" />
     <Compile Include="Assets\Scripts\Net\Impl\MatchHandler.cs" />
     <Compile Include="Assets\Scripts\Net\Impl\UserHandler.cs" />
     <Compile Include="Assets\Scripts\Net\NetMananger.cs" />
@@ -116,11 +126,13 @@
     <Compile Include="Assets\Scripts\UI\2Scene\RightStatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\StatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\UpPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Msg\ChatMsg.cs" />
     <Compile Include="Assets\Scripts\UI\Msg\PromptMsg.cs" />
     <Compile Include="Assets\Scripts\UI\PromptPanel.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIEvent.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\SetScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

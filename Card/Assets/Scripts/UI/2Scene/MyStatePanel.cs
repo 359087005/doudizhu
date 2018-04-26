@@ -1,4 +1,5 @@
-﻿using Protocol;
+﻿using Assets.Scripts.GameDataModel;
+using Protocol;
 using Protocol.Dto;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ public class MyStatePanel : StatePanel
     protected override void Awake()
     {
         base.Awake();
-        Bind(UIEvent.SHOW_GRAB_BUTTON,UIEvent.SHOW_DEAL_BUTTON,UIEvent.SET_MY_PLAYER_DATA,UIEvent.PLAYER_HIDE_READY_BUTTON);
+        Bind(UIEvent.SHOW_GRAB_BUTTON,UIEvent.SHOW_DEAL_BUTTON,UIEvent.PLAYER_HIDE_READY_BUTTON
+            //UIEvent.SET_MY_PLAYER_DATA,
+            );
     }
     public override void Execute(int eventCode, object message)
     {
@@ -32,11 +35,11 @@ public class MyStatePanel : StatePanel
                     btnNDeal.gameObject.SetActive(active);
                 }
                 break;
-            case UIEvent.SET_MY_PLAYER_DATA:
-                {
-                    this.dto = message as UserDto;
-                }
-                break;
+            //case UIEvent.SET_MY_PLAYER_DATA:
+            //    {
+            //        this.dto = message as UserDto;
+            //    }
+            //    break;
             case UIEvent.PLAYER_HIDE_READY_BUTTON:
                 btnReady.gameObject.SetActive(false);
                 break;
@@ -72,6 +75,10 @@ public class MyStatePanel : StatePanel
         btnNDeal.gameObject.SetActive(false);
         btnGrab.gameObject.SetActive(false);
         btnNGrab.gameObject.SetActive(false);
+
+        UserDto myUserDto = Model.gameModel.matchRoomDto.uIdUserDtoDict[Model.gameModel.UserDto.id];
+        //给自己绑定数据  425
+        this.dto = myUserDto;
     }
 
     protected override void ReadyState()
@@ -79,7 +86,6 @@ public class MyStatePanel : StatePanel
         base.ReadyState();
         btnReady.gameObject.SetActive(false);
     }
-
 
     private void BtnReadyClick()
     {

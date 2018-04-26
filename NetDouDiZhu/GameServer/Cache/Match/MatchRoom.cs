@@ -17,6 +17,7 @@ namespace GameServer.Cache.Match
         /// 房间内的用户列表
         /// </summary>
         public Dictionary<int,ClientPeer> uIdClientDict ;
+
         /// <summary>
         /// 已准备的用户列表
         /// </summary>
@@ -59,7 +60,12 @@ namespace GameServer.Cache.Match
         /// <param name="id"></param>
         public void EnterRoom(int userId,ClientPeer client)
         {
-            uIdClientDict.Add(id, client);
+            uIdClientDict.Add(userId, client);
+        }
+
+        public List<int> GetIdList()
+        {
+            return uIdClientDict.Keys.ToList();
         }
         /// <summary>
         /// 离开房间   
@@ -95,10 +101,12 @@ namespace GameServer.Cache.Match
             SocketMsg msg = new SocketMsg(opCode, subCode, value);
             byte[] data = EncoderTool.EncodeMsg(msg);
             byte[] packet = EncoderTool.EnconderPacket(data);
+
             foreach (var client in uIdClientDict.Values)
             {
                 if (client == exClient)
                     continue;
+
                 client.Send(packet);
             }
         }

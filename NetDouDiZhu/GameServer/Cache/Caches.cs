@@ -1,4 +1,5 @@
-﻿using GameServer.Cache.Match;
+﻿using GameServer.Cache.Fight;
+using GameServer.Cache.Match;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,14 @@ namespace GameServer.Cache
         public static AccountCache account { get; set; }
         public static UserCache user { get; set; }
         public static MatchCache match { get; set; }
+        public static FightCache fight { get; set; }
 
         static Caches()
         {
             account = new AccountCache();
             user = new UserCache();
             match = new MatchCache();
+            fight = new FightCache();
         }
     }
 }

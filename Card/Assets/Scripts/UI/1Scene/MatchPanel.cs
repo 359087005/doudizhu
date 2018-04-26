@@ -15,6 +15,7 @@ public class MatchPanel : UIBase
         switch (eventCode)
         {
             case UIEvent.SHOW_ENTER_ROOM_BUTTON:
+                btnEnter.gameObject.SetActive(true);
                 break;
 
         }
@@ -61,6 +62,7 @@ public class MatchPanel : UIBase
         imageBG.gameObject.SetActive(active);
         textDes.gameObject.SetActive(active);
         btnCancel.gameObject.SetActive(active);
+        btnEnter.gameObject.SetActive(active);
     }
 
     private string default_Des = "正在寻找房间";
@@ -95,7 +97,6 @@ public class MatchPanel : UIBase
         Dispatch(AreaCode.NET,0,socketMsg);
 
         SetObjectActive(true);
-      
     }
     private void BtnCancelClick()
     {

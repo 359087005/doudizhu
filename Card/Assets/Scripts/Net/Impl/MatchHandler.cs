@@ -45,12 +45,14 @@ public class MatchHandler : HandlerBase
         //gModel.matchRoomDto.ResetPositon(userId);
         //打开玩家数据 
         ResetPositon();
-        //自身的角色是肯定存在的 
-        int userId = gModel.UserDto.id;
-        UserDto myUseDto = dto.uIdUserDtoDict[userId];
+        ////自身的角色是肯定存在的 
+        //int userId = gModel.UserDto.id;
+        //UserDto myUserDto = dto.uIdUserDtoDict[userId];
 
+        ////给自己绑定数据  425
+        //Dispatch(AreaCode.UI, UIEvent.SET_MY_PLAYER_DATA, myUserDto);
         //显示进入房间的按钮
-        Dispatch(AreaCode.UI, UIEvent.SHOW_ENTER_ROOM_BUTTON, true);
+        Dispatch(AreaCode.UI, UIEvent.SHOW_ENTER_ROOM_BUTTON, null);
 
     }
     /// <summary>
@@ -112,8 +114,12 @@ public class MatchHandler : HandlerBase
 
         //显示为玩家状态面板准备的文字
         Dispatch(AreaCode.UI,UIEvent.PLAYER_READY, readyUserId);
-        //发送消息 隐藏准备按钮
-        Dispatch(AreaCode.UI, UIEvent.PLAYER_HIDE_READY_BUTTON, null);
+        //判断是否是自身
+        if (readyUserId == Model.gameModel.UserDto.id)
+        {
+            //发送消息 隐藏准备按钮
+            Dispatch(AreaCode.UI, UIEvent.PLAYER_HIDE_READY_BUTTON, null);
+        }
     }
 
     /// <summary>

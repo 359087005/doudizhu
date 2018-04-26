@@ -137,5 +137,13 @@ namespace GameServer.Cache
         {
             return clientIdDict[client];
         }
+
+        /// <summary>
+        /// 更新角色数据
+        /// </summary>
+        public void Update(UserModel model)
+        {
+            idModelDict[model.id] = model;
+        }
     }
 }

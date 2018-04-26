@@ -15,8 +15,12 @@ namespace GameServer.Logic
     /// <summary>
     /// 匹配逻辑层
     /// </summary>
+    /// 
+    public delegate void StartFight(List<int> uIdList);
+
     public class MatchHandler : IHandler
     {
+       public StartFight startFight;
         MatchCache matchCache = Caches.match;
         UserCache userCache = Caches.user;
 
@@ -62,6 +66,7 @@ namespace GameServer.Logic
                     //判断用户是否已经在用户匹配房间
                     if (matchCache.IsMatching(userID))
                     {
+                        client.Send(OpCode.MATCH, MatchCode.ENTER_SRES, -1); //重复加入
                         return;
                     }
                     //正常进入
@@ -151,11 +156,12 @@ namespace GameServer.Logic
                 {
                     //开始进入战斗
                     //客户端群发进入战斗
-                    //TODO
+                    startFight(room.GetIdList());
                     room.Brocast(OpCode.MATCH, MatchCode.START_BRO, null);
                     //销毁准备房间
                     matchCache.Destroy(room);
                 }
+               room.Brocast(OpCode.MATCH, MatchCode.READY_BRO, userId);
             });
         }
     }

@@ -7,7 +7,8 @@ public class StatePanel : UIBase
 {
     protected virtual void Awake()
     {
-        Bind(UIEvent.PLAYER_READY, UIEvent.PLAYER_HIDE_STATE, UIEvent.PLAYER_LEAVE, UIEvent.PLAYER_ENTER);
+        Bind(UIEvent.PLAYER_READY, UIEvent.PLAYER_HIDE_STATE, UIEvent.PLAYER_LEAVE, UIEvent.PLAYER_ENTER
+            ,UIEvent.PLAYER_CHAT);
     }
     public override void Execute(int eventCode, object message)
     {
@@ -41,6 +42,18 @@ public class StatePanel : UIBase
                     if (userId == dto.id)
                         SetPanelActive(true);
                     break;
+                }
+
+            case UIEvent.PLAYER_CHAT:
+                {
+                    if (dto == null) break;
+                    ChatMsg msg = message as ChatMsg;
+                    if (dto.id == msg.userId)
+                    {
+                        imgChat.gameObject.SetActive(true);
+                        ShowContent(msg.text);
+                    }
+                        break;
                 }
         }
     }
@@ -84,7 +97,7 @@ public class StatePanel : UIBase
     /// <summary>
     /// chat面板显示时间
     /// </summary>
-    protected float showTime = 2f;
+    protected float showTime = 3f;
 
     protected float timer = 0f;
     /// <summary>

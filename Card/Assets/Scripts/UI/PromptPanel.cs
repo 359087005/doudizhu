@@ -5,14 +5,6 @@ using UnityEngine.UI;
 
 public class PromptPanel : UIBase
 {
-    private Text txt;
-    private CanvasGroup cg;
-
-    [SerializeField]
-    [Range(0, 3)]
-    private float showTime = 1f;
-    private float timer = 0f;
-
     private void Awake()
     {
         Bind(UIEvent.PROMPTA_ANIM);
@@ -25,24 +17,32 @@ public class PromptPanel : UIBase
                 PromptMsg msg = message as PromptMsg;
                 PromptMsg(msg.txt, msg.color);
                 break;
+            default:
+                break;
         }
-
     }
 
+    private Text text;
+    private CanvasGroup cg;
+
+    [SerializeField]
+    [Range(0, 3)]
+    private float showTime = 1f;
+    private float timer = 0f;
     void Start()
     {
-        txt = transform.Find("Text").GetComponent<Text>();
+        text = transform.Find("Text").GetComponent<Text>();
         cg = transform.Find("Text").GetComponent<CanvasGroup>();
+
+        cg.alpha = 0;
     }
-
-
 
     private void PromptMsg(string txt, Color color)
     {
-        this.txt.text = txt;
-        this.txt.color = color;
+        this.text.text = txt;
+        this.text.color = color;
         cg.alpha = 0;
-
+        timer = 0;
         //播放动画
         StartCoroutine(PromptAnim());
     }

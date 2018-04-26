@@ -27,9 +27,14 @@ public class LeftStatePanel : StatePanel
     {
         base.Start();
 
-        if (Model.gameModel.matchRoomDto.leftId != -1)
+        MatchRoomDto matchRoomDto = Model.gameModel.matchRoomDto;
+        if (matchRoomDto.leftId != -1)
         {
-            this.dto = Model.gameModel.matchRoomDto.uIdUserDtoDict[Model.gameModel.matchRoomDto.leftId];
+            this.dto = matchRoomDto.uIdUserDtoDict[matchRoomDto.leftId];
+            if (matchRoomDto.readyUIdList.Contains(matchRoomDto.leftId))
+            {
+                ReadyState();
+            }
         }
         else
         {

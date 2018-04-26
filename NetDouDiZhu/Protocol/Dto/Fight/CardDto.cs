@@ -11,7 +11,6 @@ namespace Protocol.Dto.Fight
     [Serializable]
    public class CardDto
     {
-        public int id;
         public string name;
         public int color;//花色
         public int weight;//权重
@@ -21,10 +20,9 @@ namespace Protocol.Dto.Fight
 
         }
 
-        public CardDto(int id, string name, int color, int weight)
+        public CardDto(string name, int color, int weight)
         {
             this.name = name;
-            this.id = id;
             this.name = name;
             this.weight = weight;
         }

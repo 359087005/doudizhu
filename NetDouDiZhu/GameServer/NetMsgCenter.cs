@@ -11,10 +11,20 @@ namespace GameServer
     {
         IHandler account = new AccountHandler();
         IHandler user = new UserHandler();
-        IHandler match = new MatchHandler();
+        MatchHandler match = new MatchHandler();
+        IHandler chat = new ChatHandler();
+        FightHandler fight = new FightHandler();
+
+
+        public NetMsgCenter()
+        {
+            match.startFight += fight.StartFight;
+        }
 
         public void DisConnected(ClientPeer client)
         {
+            fight.OnDisConnect(client);
+            chat.OnDisConnect(client);
             match.OnDisConnect(client);
             user.OnDisConnect(client);
             account.OnDisConnect(client);
@@ -32,6 +42,12 @@ namespace GameServer
                     break;
                 case OpCode.MATCH:
                     match.OnReceive(client, msg.subCode, msg.value);
+                    break;
+                case OpCode.CHAT:
+                    chat.OnReceive(client, msg.subCode, msg.value);
+                    break;
+                case OpCode.FIGHT:
+                    fight.OnReceive(client, msg.subCode, msg.value);
                     break;
             }
         }

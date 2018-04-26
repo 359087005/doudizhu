@@ -32,6 +32,7 @@ public class UpPanel : UIBase
         imageCards[0] = transform.Find("imgCard1").GetComponent<Image>();
         imageCards[1] = transform.Find("imgCard2").GetComponent<Image>();
         imageCards[2] = transform.Find("imgCard3").GetComponent<Image>();
+
     }
 
     /// <summary>

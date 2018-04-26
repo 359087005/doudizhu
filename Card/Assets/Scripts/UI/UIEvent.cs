@@ -15,7 +15,7 @@ public class UIEvent  {
 
     public const int SET_TABLE_CARDS = 5; //设置底牌
 
-    public const int SET_MY_PLAYER_DATA = 16;//设置自身数据
+    //public const int SET_MY_PLAYER_DATA = 16;//设置自身数据  425
     public const int SET_LEFT_PLAYER_DATA = 6; //设置左边玩家的数据
     public const int PLAYER_READY = 7; //角色准备
     public const int PLAYER_ENTER = 8;//角色进入
@@ -29,6 +29,8 @@ public class UIEvent  {
     public const int SHOW_GRAB_BUTTON = 14;//抢地主~~~~~~~
     public const int SHOW_DEAL_BUTTON = 15;//出牌~
     public const int PLAYER_HIDE_READY_BUTTON = 17;//准备按钮
+
+    public const int CHANGE_MUTIPLE = 18; //改变倍数
 
     public const int PROMPTA_ANIM = int.MaxValue;
 }

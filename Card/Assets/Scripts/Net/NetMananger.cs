@@ -1,4 +1,5 @@
-﻿using Protocol;
+﻿using Assets.Scripts.Net.Impl;
+using Protocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,8 @@ public class NetMananger : ManagerBase
     HandlerBase accountHandler = new AccountHandler();
     HandlerBase userHandler = new UserHandler();
     HandlerBase matchHandler = new MatchHandler();
+    HandlerBase chatHandler = new ChatHandler();
+    HandlerBase fightHandler = new FightHandler();
     /// <summary>
     /// 接收网络发来的消息
     /// </summary>
@@ -71,6 +74,12 @@ public class NetMananger : ManagerBase
             case OpCode.MATCH:
                 matchHandler.OnReceive(msg.subCode, msg.value);
                 break;
+            case OpCode.CHAT:
+                chatHandler.OnReceive(msg.subCode, msg.value);
+                break;
+            case OpCode.FIGHT:
+                fightHandler.OnReceive(msg.subCode, msg.value);
+                break; 
         }
     }
 

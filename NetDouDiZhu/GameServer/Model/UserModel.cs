@@ -20,7 +20,6 @@ namespace GameServer.Model
         public int loseCount;
         public int runCount;
 
-
         public int accountID;
 
         public UserModel(int id,string name,int accountID)
