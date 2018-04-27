@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Character\CharacterBase.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterEvent.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterManager.cs" />
+    <Compile Include="Assets\Scripts\Character\DeskCtrl.cs" />
     <Compile Include="Assets\Scripts\Character\LeftPlayerControl.cs" />
     <Compile Include="Assets\Scripts\Character\MyPlayerControl.cs" />
     <Compile Include="Assets\Scripts\Character\PlayerControl.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Assets\Scripts\UI\2Scene\BottomPanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\LeftStatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\MyStatePanel.cs" />
+    <Compile Include="Assets\Scripts\UI\2Scene\OverPanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\RightStatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\StatePanel.cs" />
     <Compile Include="Assets\Scripts\UI\2Scene\UpPanel.cs" />

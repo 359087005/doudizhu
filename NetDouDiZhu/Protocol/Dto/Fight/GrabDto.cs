@@ -10,15 +10,17 @@ namespace Protocol.Dto.Fight
     {
         public int userId;
         public List<CardDto> tableCarList;
+        public List<CardDto> playerCardList;
 
         public GrabDto()
         {
 
         }
-        public GrabDto(int userId, List<CardDto> tableCarList)
+        public GrabDto(int userId, List<CardDto> tableCarList,List<CardDto> playerCardList)
         {
             this.userId = userId;
             this.tableCarList = tableCarList;
+            this.playerCardList = playerCardList;
         }
     }
 }

@@ -91,7 +91,10 @@ namespace GameServer.Logic
                 }
 
                 //代码执行到这里 代表有角色
-                OnLine(client);
+                if (userCache.IsOnLine(client) == false) //防止二次调用上线的方法 所以进行二次判断
+                {
+                    OnLine(client);
+                }
                 //发送到客户端角色信息
                 UserModel model = userCache.GetModelByAccountID(accountId);
                 UserDto dto = new UserDto(model.id,model.name,model.been,model.lv,model.exp,model.winCount,model.loseCount,model.runCount);

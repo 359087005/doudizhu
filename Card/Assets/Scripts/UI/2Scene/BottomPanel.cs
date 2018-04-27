@@ -41,7 +41,6 @@ public class BottomPanel : UIBase
 
         for (int i = 0; i < 7; i++)
         {
-            int j = i;
             btns[i] = imgChoose.transform.GetChild(i).GetComponent<Button>();
         }
         btns[0].onClick.AddListener(OnChatClick1);
@@ -113,9 +112,9 @@ public class BottomPanel : UIBase
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
         btnChat.onClick.RemoveListener(SetChooseActive);
 
         btns[0].onClick.RemoveListener(OnChatClick1);

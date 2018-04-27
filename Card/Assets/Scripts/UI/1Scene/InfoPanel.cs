@@ -50,9 +50,9 @@ public class InfoPanel : UIBase
     {
         Dispatch(AreaCode.UI, UIEvent.SET_PANEL_ACTIVE, true);
     }
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
         btn_Set.onClick.RemoveListener(BtnSetClick);
     }
 

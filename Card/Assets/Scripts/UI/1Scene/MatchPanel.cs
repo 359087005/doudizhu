@@ -81,9 +81,9 @@ public class MatchPanel : UIBase
             textDes.text += ".";
         }
     }
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
 
         btnMatch.onClick.RemoveListener(BtnMathchClick);
         btnCancel.onClick.RemoveListener(BtnCancelClick);
@@ -97,12 +97,16 @@ public class MatchPanel : UIBase
         Dispatch(AreaCode.NET,0,socketMsg);
 
         SetObjectActive(true);
+
+        this.btnMatch.interactable = false;
     }
     private void BtnCancelClick()
     {
         socketMsg.Change(OpCode.MATCH, MatchCode.LEAVE_CREQ, null);
         Dispatch(AreaCode.NET, 0, socketMsg);
         SetObjectActive(false);
+
+        this.btnMatch.interactable = true;
     }
 
     private void BtnEnterClick()

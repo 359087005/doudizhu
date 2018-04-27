@@ -18,7 +18,7 @@ public class LeftStatePanel : StatePanel
         switch (eventCode)
         {
             case UIEvent.SET_LEFT_PLAYER_DATA:
-                this.dto = message as UserDto;
+                this.userDto = message as UserDto;
                 break;
         }
     }
@@ -30,7 +30,7 @@ public class LeftStatePanel : StatePanel
         MatchRoomDto matchRoomDto = Model.gameModel.matchRoomDto;
         if (matchRoomDto.leftId != -1)
         {
-            this.dto = matchRoomDto.uIdUserDtoDict[matchRoomDto.leftId];
+            this.userDto = matchRoomDto.uIdUserDtoDict[matchRoomDto.leftId];
             if (matchRoomDto.readyUIdList.Contains(matchRoomDto.leftId))
             {
                 ReadyState();

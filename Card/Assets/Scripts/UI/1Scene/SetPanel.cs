@@ -56,9 +56,9 @@ public class SetPanel : UIBase
         Application.Quit();
     }
 
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
         btn_Close.onClick.RemoveListener(BtnCloseClick);
         btn_Quit.onClick.RemoveListener(BtnQuitClick);
         toggle_Audio.onValueChanged.RemoveListener(ToggleClick);

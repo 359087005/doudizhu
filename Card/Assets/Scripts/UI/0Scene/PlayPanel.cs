@@ -30,9 +30,9 @@ public class PlayPanel : UIBase {
     }
 
 
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
 
         startBtn.onClick.RemoveAllListeners();
         RegisterBtn.onClick.RemoveAllListeners();

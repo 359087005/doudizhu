@@ -32,5 +32,7 @@ public class UIEvent  {
 
     public const int CHANGE_MUTIPLE = 18; //改变倍数
 
+    public const int HIDE_DEAL_BUTTON = 19;//关闭隐藏按钮
+
     public const int PROMPTA_ANIM = int.MaxValue;
 }

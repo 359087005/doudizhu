@@ -17,7 +17,7 @@ public class UpPanel : UIBase
         switch (eventCode)
         {
             case UIEvent.SET_TABLE_CARDS:
-                SetCards(message as CardDto[]);
+                SetCards(message as List<CardDto>);
                 break;
             default:
                 break;
@@ -40,7 +40,7 @@ public class UpPanel : UIBase
     /// 卡牌数据类  暂无  用obj代替
     /// </summary>
     /// <param name="cards"></param>
-    private void SetCards(CardDto[] cards)
+    private void SetCards(List<CardDto> cards)
     {
         imageCards[0].sprite = Resources.Load<Sprite>("Poker/" + cards[0].name);
         imageCards[1].sprite = Resources.Load<Sprite>("Poker/" + cards[1].name);

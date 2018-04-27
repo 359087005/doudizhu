@@ -26,7 +26,7 @@ namespace Assets.Scripts.Net.Impl
                     msg.chatType = chatType;
                     msg.text = text;
                     Dispatch(AreaCode.UI,UIEvent.PLAYER_CHAT,msg);
-                    Dispatch(AreaCode.AUDIO,AudioEvent.PLAY_EFFECT_AUDIO,"Chat_" + chatType);
+                    Dispatch(AreaCode.AUDIO,AudioEvent.PLAY_EFFECT_AUDIO,"Chat/Chat_" + chatType);
                     break;
                 default:
                     break;

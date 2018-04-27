@@ -13,7 +13,6 @@ public class CreatPanel : UIBase
 
     public override void Execute(int eventCode, object message)
     {
-        Debug.Log("CreatPanel...");
         switch (eventCode)
         {
             case UIEvent.CREAT_PANEL_ACTIVE:
@@ -48,9 +47,9 @@ public class CreatPanel : UIBase
         Dispatch(AreaCode.NET,0,socketmsg);
     }
 
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
         btnCreat.onClick.RemoveListener(BtnCreatClick);
     }
 }

@@ -127,6 +127,11 @@ namespace GameServer.Logic
                     if (user.IsOnLine(client) == false) return;
 
                     int userId = user.GetIdByClient(client);
+
+                    if (userId != dto.userId)  //DTO的ID可以用来做验证。
+                    {
+                        return;
+                    }
                     FightRoom room = fight.GetRoom(userId);
                     //玩家出牌
                     //掉线  在线
@@ -147,10 +152,11 @@ namespace GameServer.Logic
                     {
                         //发送给出牌者
                         client.Send(OpCode.FIGHT, FightCode.DEAL_SRES, 0);
+                        List<CardDto> remainCardList = room.GetPlayerCard(userId);
+                        dto.remainCardList = remainCardList;
                         //广播
                         Brocast(room, OpCode.FIGHT, FightCode.DEAL_BRO, dto);
                         //检测下 剩余牌  为0 就赢了
-                        List<CardDto> remainCardList = room.GetPlayerCard(userId);
                         if (remainCardList.Count == 0)
                         {
                             //游戏结束
@@ -208,7 +214,7 @@ namespace GameServer.Logic
             }
             //给客户端发消息  谁赢了。身份，豆子多少
             OverDto dto = new OverDto();
-            dto.winIdrntity = identity; dto.winUidList = winUids; dto.beenCount = winBeen;
+            dto.winIdentity = identity; dto.winUidList = winUids; dto.beenCount = winBeen;
 
             Brocast(room, OpCode.FIGHT, FightCode.OVER_BRO, dto);
 
@@ -253,9 +259,11 @@ namespace GameServer.Logic
                 {
                     //抢
                     room.SetLandlord(userId);
-                    GrabDto grab = new GrabDto(userId, room.TableCardList);
+                    GrabDto grab = new GrabDto(userId, room.TableCardList,room.GetPlayerCard(userId));
                     //广播  谁是地主  三张底牌
                     Brocast(room, OpCode.FIGHT, FightCode.GRAB_LANDLORD_BRO, grab);
+                    //发送一个出牌的命令
+                    Brocast(room,OpCode.FIGHT,FightCode.TURN_DEAL_BRO,userId);
                 }
                 else
                 {
@@ -290,10 +298,9 @@ namespace GameServer.Logic
                         List<CardDto> cardList = room.GetPlayerCard(uId);
                         client.Send(OpCode.FIGHT, FightCode.GET_CARD_SRES, cardList);
                     }
-
                     //发送开始抢地主响应
                     int firstUserId = room.GetFirstUid();
-                    Brocast(room, OpCode.FIGHT, FightCode.GRAB_LANDLORD_BRO, firstUserId, null);
+                    Brocast(room, OpCode.FIGHT, FightCode.TURN_GRAB__BRO, firstUserId, null);
                 }
                 );
         }
@@ -312,7 +319,7 @@ namespace GameServer.Logic
                 if (user.IsOnLine(player.id))  //425
                 {
                     ClientPeer client = user.GetClientById(player.id);
-                    if (exClient == null)
+                    if (client == exClient)
                         continue;
                     client.Send(packet);
                 }

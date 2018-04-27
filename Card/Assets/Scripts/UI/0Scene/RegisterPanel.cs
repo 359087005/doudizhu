@@ -80,9 +80,9 @@ public class RegisterPanel : UIBase
         SetPanelActive(false);
     }
 
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
 
         btnRegist.onClick.RemoveListener(BtnRegistClick);
         btnClose.onClick.RemoveListener(CloseClick);

@@ -63,7 +63,6 @@ public class StartPanel : UIBase
         AccountDto dto = new AccountDto(textID.text, textPasword.text);
         socketMsg.Change(OpCode.ACCOUNT, AccountCode.LOGIN, dto);
         Dispatch(AreaCode.NET, 0, socketMsg);
-        Debug.Log("StartPanel...");
         //ClearText();
     }
     void CloseClick()
@@ -71,9 +70,9 @@ public class StartPanel : UIBase
         SetPanelActive(false);
     }
 
-    public override void Destroy()
+    public override void OnDestroy()
     {
-        base.Destroy();
+        base.OnDestroy();
         btnLogin.onClick.RemoveAllListeners();
         btnClose.onClick.RemoveAllListeners();
     }

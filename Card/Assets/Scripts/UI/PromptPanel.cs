@@ -15,7 +15,7 @@ public class PromptPanel : UIBase
         {
             case UIEvent.PROMPTA_ANIM:
                 PromptMsg msg = message as PromptMsg;
-                PromptMsg(msg.txt, msg.color);
+                promptMsg(msg.txt, msg.color);
                 break;
             default:
                 break;
@@ -33,14 +33,13 @@ public class PromptPanel : UIBase
     {
         text = transform.Find("Text").GetComponent<Text>();
         cg = transform.Find("Text").GetComponent<CanvasGroup>();
-
         cg.alpha = 0;
     }
 
-    private void PromptMsg(string txt, Color color)
+    private void promptMsg(string txt, Color color)
     {
-        this.text.text = txt;
-        this.text.color = color;
+        text.text = txt;
+        text.color = color;
         cg.alpha = 0;
         timer = 0;
         //播放动画

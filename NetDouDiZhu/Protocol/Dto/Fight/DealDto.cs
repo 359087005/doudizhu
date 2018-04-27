@@ -15,6 +15,10 @@ namespace Protocol.Dto.Fight
         public List<CardDto> selectCardList;
 
         /// <summary>
+        /// 剩余手牌
+        /// </summary>
+        public List<CardDto> remainCardList;
+        /// <summary>
         /// 长度
         /// </summary>
         public int length;
@@ -46,6 +50,7 @@ namespace Protocol.Dto.Fight
             this.weight = CardWeight.GetWeight(cardList,this.type);
             this.userId = userID;
             this.isRegular = (this.type != CardType.NONE);
+            this.remainCardList = new List<CardDto>();
         }
     }
 }

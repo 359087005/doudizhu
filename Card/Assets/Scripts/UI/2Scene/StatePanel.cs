@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Protocol.Dto;
+using Protocol.Dto.Fight;
+
 public class StatePanel : UIBase 
 {
     protected virtual void Awake()
     {
-        Bind(UIEvent.PLAYER_READY, UIEvent.PLAYER_HIDE_STATE, UIEvent.PLAYER_LEAVE, UIEvent.PLAYER_ENTER
-            ,UIEvent.PLAYER_CHAT);
+        Bind(
+            UIEvent.PLAYER_READY,
+            UIEvent.PLAYER_HIDE_STATE,
+            UIEvent.PLAYER_LEAVE, 
+            UIEvent.PLAYER_ENTER,
+            UIEvent.PLAYER_CHAT,
+            UIEvent.PLAYER_CHANGE_IDENTITY
+            );
     }
     public override void Execute(int eventCode, object message)
     {
@@ -16,9 +24,9 @@ public class StatePanel : UIBase
         {
             case UIEvent.PLAYER_READY:
                 {
-                    if (dto == null) break;
+                    if (userDto == null) break;
                     int userId = (int)message;
-                    if (userId == dto.id)
+                    if (userId == userDto.id)
                         ReadyState();
                     break;
                 }
@@ -29,31 +37,41 @@ public class StatePanel : UIBase
                 }
             case UIEvent.PLAYER_LEAVE:
                 {
-                    if (dto == null) break;
+                    if (userDto == null) break;
                     int userId = (int)message;
-                    if (userId == dto.id)
+                    if (userId == userDto.id)
                         SetPanelActive(false);
                     break;
                 }
             case UIEvent.PLAYER_ENTER:
                 {
-                    if (dto == null) break;
+                    if (userDto == null) break;
                     int userId = (int)message;
-                    if (userId == dto.id)
+                    if (userId == userDto.id)
                         SetPanelActive(true);
                     break;
                 }
 
             case UIEvent.PLAYER_CHAT:
                 {
-                    if (dto == null) break;
+                    if (userDto == null) break;
                     ChatMsg msg = message as ChatMsg;
-                    if (dto.id == msg.userId)
+                    if (userDto.id == msg.userId)
                     {
                         imgChat.gameObject.SetActive(true);
                         ShowContent(msg.text);
                     }
                         break;
+                }
+            case UIEvent.PLAYER_CHANGE_IDENTITY:
+                {
+                    if (userDto == null) break;
+                    int userId = (int)message;
+                    if (userDto.id == userId)
+                    {
+                        SetIdentity(1);
+                    }
+                    break;
                 }
         }
     }
@@ -61,7 +79,7 @@ public class StatePanel : UIBase
     /// <summary>
     /// 角色数据
     /// </summary>
-    protected UserDto dto;
+    protected UserDto userDto;
 
     protected Image imgIdentity;
     protected Text textReady;
@@ -77,6 +95,7 @@ public class StatePanel : UIBase
 
         textReady.gameObject.SetActive(false);
         imgChat.gameObject.SetActive(false);
+        SetIdentity(0);
     }
     
     protected virtual void ReadyState()

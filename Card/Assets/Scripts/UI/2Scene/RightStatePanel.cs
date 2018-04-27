@@ -18,7 +18,7 @@ public class RightStatePanel : StatePanel
         switch (eventCode)
         {
             case UIEvent.SET_RIGHT_PLAYER_DATA:
-                this.dto = message as UserDto;
+                this.userDto = message as UserDto;
                 break;
         }
     }
@@ -29,7 +29,7 @@ public class RightStatePanel : StatePanel
         MatchRoomDto matchRoomDto = Model.gameModel.matchRoomDto;
         if (matchRoomDto.rightId != -1)
         {
-            this.dto = matchRoomDto.uIdUserDtoDict[matchRoomDto.rightId];
+            this.userDto = matchRoomDto.uIdUserDtoDict[matchRoomDto.rightId];
             if (matchRoomDto.readyUIdList.Contains(matchRoomDto.rightId))
             {
                 ReadyState();

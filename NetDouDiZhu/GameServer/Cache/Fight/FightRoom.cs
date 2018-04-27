@@ -126,7 +126,7 @@ namespace GameServer.Cache.Fight
         /// 判断能不能压死上回合的牌
         /// </summary>
         /// <returns></returns>
-        public bool DealCard(int length,int type,int weight,int userId,List<CardDto> cardList)
+        public bool DealCard(int length, int type, int weight, int userId, List<CardDto> cardList)
         {
             bool CanDeal = false;
 
@@ -155,15 +155,23 @@ namespace GameServer.Cache.Fight
             {
                 CanDeal = true;
             }
+            //自己是第一次出牌 或自己是最大的出牌者
+            else if (userId == roundModel.BiggestUid)
+            {
+                CanDeal = true;
+            }
+
+
+
             //能管上
             if (CanDeal)
             {
                 //移除玩家手牌
-                RemoveCards(userId,cardList);
+                RemoveCards(userId, cardList);
                 //炸弹倍数
                 SetMutiple(type);
                 //保存回合信息
-                roundModel.Change(userId,length,weight,type);
+                roundModel.Change(userId, length, weight, type);
             }
             return CanDeal;
         }
@@ -177,15 +185,22 @@ namespace GameServer.Cache.Fight
             //获取玩家现在又的手牌
             List<CardDto> currentCardList = GetPlayerCard(userId);
 
-            for (int i = 0; i < currentCardList.Count; i++)
+            List<CardDto> list = new List<CardDto>();
+
+            foreach (CardDto item in cardList)
             {
-                foreach (CardDto item in cardList)
+                for (int i = 0; i < currentCardList.Count; i++)
                 {
                     if (currentCardList[i].name == item.name)
                     {
-                        currentCardList.RemoveAt(i);
+                        list.Add(currentCardList[i]);
                     }
                 }
+            }
+
+            foreach (var item in list)
+            {
+                currentCardList.Remove(item);
             }
         }
 
@@ -229,7 +244,7 @@ namespace GameServer.Cache.Fight
             //一人   17
             for (int i = 0; i < 17; i++)
             {
-                CardDto dto =  cardModel.Deal();
+                CardDto dto = cardModel.Deal();
                 PlayerList[0].Add(dto);
             }
             for (int i = 0; i < 17; i++)
@@ -268,7 +283,7 @@ namespace GameServer.Cache.Fight
                     {
                         player.Add(TableCardList[i]);
                     }
-
+                    this.Sort();
                     //开始回合
                     roundModel.Start(userId);
                 }
@@ -356,11 +371,11 @@ namespace GameServer.Cache.Fight
         /// </summary>
         /// <param name="cardList"></param>
         /// <param name="asc"></param>
-        private void SortCard(List<CardDto> cardList,bool asc = true)  //asc  des 升降顺序
+        private void SortCard(List<CardDto> cardList, bool asc = true)  //asc  des 升降顺序
         {
             cardList.Sort
                 (
-             delegate(CardDto a,CardDto b) 
+             delegate (CardDto a, CardDto b)
              {
                  if (asc)
                  {
@@ -368,12 +383,12 @@ namespace GameServer.Cache.Fight
                  }
                  else
                      return a.weight.CompareTo(b.weight) * -1;
-             }   
+             }
              );
         }
 
         /// <summary>
-        /// 排序
+        /// 排序三个玩家的牌 和三张底牌
         /// </summary>
         /// <param name="asc"></param>
         public void Sort(bool asc = true)
@@ -381,7 +396,7 @@ namespace GameServer.Cache.Fight
             SortCard(PlayerList[0].cardList, asc);
             SortCard(PlayerList[1].cardList, asc);
             SortCard(PlayerList[2].cardList, asc);
-            SortCard(TableCardList,true);
+            SortCard(TableCardList, true);
         }
     }
 }

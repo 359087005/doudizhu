@@ -12,7 +12,7 @@ public class UIBase : MonoBase
     /// <summary>
     /// 自身关心的一个消息集合
     /// </summary>
-    List<int> list = new List<int>();
+     List<int> list = new List<int>();
 
 
     /// <summary>
@@ -26,7 +26,6 @@ public class UIBase : MonoBase
     /// <summary>
     /// 解除绑定
     /// </summary>
-
     protected void UnBind()
     {
         UIManager._Instance.Remove(list.ToArray(), this);
@@ -35,9 +34,10 @@ public class UIBase : MonoBase
     /// <summary>
     ///自动解除绑定
     /// </summary>
-    public virtual void Destroy()
+    public virtual void OnDestroy()
     {
-        UnBind();
+        if (list != null)
+            UnBind();
     }
 
     public void Dispatch(int areaCode, int eventCode, object message)

@@ -12,7 +12,11 @@ public class MyStatePanel : StatePanel
     protected override void Awake()
     {
         base.Awake();
-        Bind(UIEvent.SHOW_GRAB_BUTTON,UIEvent.SHOW_DEAL_BUTTON,UIEvent.PLAYER_HIDE_READY_BUTTON
+        Bind(UIEvent.SHOW_GRAB_BUTTON,
+            UIEvent.SHOW_DEAL_BUTTON,
+            UIEvent.PLAYER_HIDE_READY_BUTTON,
+            UIEvent.HIDE_DEAL_BUTTON
+
             //UIEvent.SET_MY_PLAYER_DATA,
             );
     }
@@ -31,8 +35,7 @@ public class MyStatePanel : StatePanel
             case UIEvent.SHOW_DEAL_BUTTON:
                 {
                     bool active = (bool)message;
-                    btnDeal.gameObject.SetActive(active);
-                    btnNDeal.gameObject.SetActive(active);
+                    ShowDealBtn(active);
                 }
                 break;
             //case UIEvent.SET_MY_PLAYER_DATA:
@@ -42,6 +45,9 @@ public class MyStatePanel : StatePanel
             //    break;
             case UIEvent.PLAYER_HIDE_READY_BUTTON:
                 btnReady.gameObject.SetActive(false);
+                break;
+            case UIEvent.HIDE_DEAL_BUTTON:
+                ShowDealBtn((bool)message);
                 break;
             default:
                 break;
@@ -67,8 +73,8 @@ public class MyStatePanel : StatePanel
         btnReady.onClick.AddListener(BtnReadyClick);
         btnDeal.onClick.AddListener(BtnDealClick);
         btnNDeal.onClick.AddListener(BtnNDealClick);
-        btnGrab.onClick.AddListener(BtnGrabClick);
-        btnNGrab.onClick.AddListener(BtnNGrabClick);
+        btnGrab.onClick.AddListener(delegate () { BtnGrabClick(true); });
+        btnNGrab.onClick.AddListener(delegate () { BtnGrabClick(false); });
 
         socketMsg = new SocketMsg();
         btnDeal.gameObject.SetActive(false);
@@ -78,7 +84,7 @@ public class MyStatePanel : StatePanel
 
         UserDto myUserDto = Model.gameModel.matchRoomDto.uIdUserDtoDict[Model.gameModel.UserDto.id];
         //给自己绑定数据  425
-        this.dto = myUserDto;
+        this.userDto = myUserDto;
     }
 
     protected override void ReadyState()
@@ -90,33 +96,45 @@ public class MyStatePanel : StatePanel
     private void BtnReadyClick()
     {
         //向服务器发送准备
-        socketMsg.Change(OpCode.MATCH,MatchCode.READY_CREQ,null);
-        Dispatch(AreaCode.NET,0,socketMsg);
+        socketMsg.Change(OpCode.MATCH, MatchCode.READY_CREQ, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
     private void BtnDealClick()
     {
+        //出牌  通知角色模块出牌
+        Dispatch(AreaCode.CHARACTER,CharacterEvent.DEAL_CARD,null);
 
     }
     private void BtnNDealClick()
     {
+        //不出
+        socketMsg.Change(OpCode.FIGHT,FightCode.PASS_CREQ,null);
+        Dispatch(AreaCode.NET,0,socketMsg);
 
     }
-    private void BtnGrabClick()
+    private void ShowDealBtn(bool active)
     {
-
-    }
-    private void BtnNGrabClick()
-    {
-
+        btnDeal.gameObject.SetActive(active);
+        btnNDeal.gameObject.SetActive(active);
     }
 
-    public override void Destroy()
+    private void BtnGrabClick(bool result)
     {
-        base.Destroy();
+        //抢地主
+        socketMsg.Change(OpCode.FIGHT, FightCode.GRAB_LANDLORD_CREQ, result);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+        //点击之后隐藏按钮
+        btnGrab.gameObject.SetActive(false);
+        btnNGrab.gameObject.SetActive(false);
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
         btnReady.onClick.RemoveListener(BtnReadyClick);
         btnDeal.onClick.RemoveListener(BtnDealClick);
         btnNDeal.onClick.RemoveListener(BtnNDealClick);
-        btnGrab.onClick.RemoveListener(BtnGrabClick);
-        btnNGrab.onClick.RemoveListener(BtnNGrabClick);
+        btnGrab.onClick.RemoveListener(delegate () { BtnGrabClick(true); });
+        btnNGrab.onClick.RemoveListener(delegate () { BtnGrabClick(false); });
     }
 }

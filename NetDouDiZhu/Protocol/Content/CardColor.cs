@@ -36,7 +36,6 @@ namespace Protocol.Content
                     break;
                 default:
                     throw new Exception("呵呵呵");
-                    break;
             }
             return cardColor;
         }

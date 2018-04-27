@@ -150,7 +150,7 @@ namespace GameServer.Logic
                 //玩家准备list添加
                 MatchRoom room = matchCache.GetRoom(userId);
                 room.Ready(userId);
-
+                room.Brocast(OpCode.MATCH, MatchCode.READY_BRO, userId);
                 //每准备一个 判断一下是否全部准备
                 if (room.IsReady())
                 {
@@ -161,7 +161,6 @@ namespace GameServer.Logic
                     //销毁准备房间
                     matchCache.Destroy(room);
                 }
-               room.Brocast(OpCode.MATCH, MatchCode.READY_BRO, userId);
             });
         }
     }

@@ -73,7 +73,6 @@ namespace Protocol.Content
                     break;
                 default:
                     throw new Exception("呵");
-                    break;
             }
             return cardWeight;
         }
@@ -84,7 +83,7 @@ namespace Protocol.Content
 
             if (cardType == CardType.THREE || cardType == CardType.THREE_ONE || cardType == CardType.THREE_TWO)
             {
-                for (int i = 0; i < cardlist.Count; i++)
+                for (int i = 0; i < cardlist.Count -2; i++)
                 {
                     if (cardlist[i].weight == cardlist[i + 1].weight && cardlist[i].weight == cardlist[i + 2].weight)
                     {

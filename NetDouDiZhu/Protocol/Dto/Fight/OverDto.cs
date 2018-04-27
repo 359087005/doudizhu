@@ -8,7 +8,7 @@ namespace Protocol.Dto.Fight
     [Serializable]
    public class OverDto
     {
-        public int winIdrntity;
+        public int winIdentity;
         public List<int> winUidList;
         public int beenCount;
 
