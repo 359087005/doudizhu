@@ -66,7 +66,7 @@ public class InfoPanel : UIBase
         textName.text = name;
         textLV.text = "Lv." + level;
         textExp_Num.text = exp + " / " + level * 100;
-        sliderExp.value = (float)exp / level * 100;
+        sliderExp.value = (float)exp / (level * 100);
         textBeen.text = been.ToString();
     }
 }

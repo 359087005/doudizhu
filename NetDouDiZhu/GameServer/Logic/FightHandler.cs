@@ -190,6 +190,13 @@ namespace GameServer.Logic
                 model.winCount++;
                 model.been += winBeen;
                 model.exp += 100;
+                int maxExp = model.lv * 100;
+                while (maxExp <= model.exp)
+                {
+                    model.lv++;
+                    model.exp -= maxExp;
+                    maxExp = model.lv * 100;
+                }
                 user.Update(model);
             }
 
@@ -201,6 +208,13 @@ namespace GameServer.Logic
                 model.loseCount++;
                 model.been -= winBeen;
                 model.exp += 10;
+                int maxExp = model.lv * 100; ;
+                while (maxExp <= model.exp)
+                {
+                    model.lv++;
+                    model.exp -= maxExp;
+                    maxExp = model.lv * 100;
+                }
                 user.Update(model);
             }
             //给逃跑的玩家  逃跑   豆子  经验  等级..之后玩家数据模型刷新

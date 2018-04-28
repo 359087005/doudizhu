@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Audio\AudioEffect.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioEvent.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\Audio\BGAudio.cs" />
     <Compile Include="Assets\Scripts\Character\CardCtrl.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterBase.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterEvent.cs" />

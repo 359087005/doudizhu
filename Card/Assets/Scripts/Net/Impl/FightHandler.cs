@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FightHandler : HandlerBase 
+public class FightHandler : HandlerBase
 {
     public override void OnReceive(int subCode, object value)
     {
@@ -31,6 +31,9 @@ public class FightHandler : HandlerBase
             case FightCode.DEAL_SRES:
                 DealResponse((int)value);
                 break;
+            case FightCode.OVER_BRO:
+                OverBro(value as OverDto);
+                break;
             default:
                 break;
         }
@@ -41,11 +44,26 @@ public class FightHandler : HandlerBase
         if (result == -1)
         {
             //玩家出的牌关不上
-            msg = new PromptMsg("管不上",Color.red);
-            Dispatch(AreaCode.UI,UIEvent.PROMPTA_ANIM,msg);
+            msg = new PromptMsg("管不上", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.PROMPTA_ANIM, msg);
             //重新显示出牌按钮
-            Dispatch(AreaCode.UI,UIEvent.SHOW_DEAL_BUTTON,true);
+            Dispatch(AreaCode.UI, UIEvent.SHOW_DEAL_BUTTON, true);
         }
+    }
+    /// <summary>
+    /// 游戏结束
+    /// </summary>
+    private void OverBro(OverDto dto)
+    {
+        if (dto.winUidList.Contains(Model.gameModel.UserDto.id))
+        {
+            Dispatch(AreaCode.AUDIO, AudioEvent.PLAY_EFFECT_AUDIO, "Fight/MusicEx_Win");
+        }
+        else
+        {
+            Dispatch(AreaCode.AUDIO, AudioEvent.PLAY_EFFECT_AUDIO, "Fight/MusicEx_Lose");
+        }
+        Dispatch(AreaCode.UI,UIEvent.SHOW_OVER_PANEL,dto);
     }
 
     /// <summary>
@@ -55,7 +73,7 @@ public class FightHandler : HandlerBase
     private void DealBro(DealDto dto)
     {
         //关闭出牌按钮
-        Dispatch(AreaCode.UI,UIEvent.HIDE_DEAL_BUTTON,null);
+        Dispatch(AreaCode.UI, UIEvent.HIDE_DEAL_BUTTON, null);
         //移除出完的手牌
         int eventCode = -1;
         if (dto.userId == Model.gameModel.matchRoomDto.leftId)
@@ -72,15 +90,15 @@ public class FightHandler : HandlerBase
         }
         Dispatch(AreaCode.CHARACTER, eventCode, dto.remainCardList);
         //显示到桌面//出的牌放到正中间
-        Dispatch(AreaCode.CHARACTER,CharacterEvent.UPDATE_SHOW_DESK,dto.selectCardList);
+        Dispatch(AreaCode.CHARACTER, CharacterEvent.UPDATE_SHOW_DESK, dto.selectCardList);
         //播放音效
-        PlayDealAudio(dto.type,dto.weight);
+        PlayDealAudio(dto.type, dto.weight);
     }
 
     /// <summary>
     /// 播放音效
     /// </summary>
-    private void PlayDealAudio(int cardType,int weight)
+    private void PlayDealAudio(int cardType, int weight)
     {
         string audioName = "Fight/";
         switch (cardType)
@@ -89,7 +107,7 @@ public class FightHandler : HandlerBase
                 audioName += "Woman_" + weight;
                 break;
             case CardType.TWO:
-                audioName += "Woman_dui" + weight/2;
+                audioName += "Woman_dui" + weight / 2;
                 break;
             case CardType.STRAIGHT:
                 audioName += "Woman_shunzi";
@@ -118,7 +136,7 @@ public class FightHandler : HandlerBase
             default:
                 break;
         }
-        Dispatch(AreaCode.AUDIO,AudioEvent.PLAY_EFFECT_AUDIO,audioName);
+        Dispatch(AreaCode.AUDIO, AudioEvent.PLAY_EFFECT_AUDIO, audioName);
     }
 
     /// <summary>
@@ -129,7 +147,7 @@ public class FightHandler : HandlerBase
     {
         if (Model.gameModel.UserDto.id == userId)
         {
-            Dispatch(AreaCode.UI,UIEvent.SHOW_DEAL_BUTTON,true);
+            Dispatch(AreaCode.UI, UIEvent.SHOW_DEAL_BUTTON, true);
         }
     }
 
@@ -138,7 +156,7 @@ public class FightHandler : HandlerBase
     private void GrabLandLoardBro(GrabDto dto)
     {
         //改变身份
-        Dispatch(AreaCode.UI,UIEvent.PLAYER_CHANGE_IDENTITY, dto.userId);
+        Dispatch(AreaCode.UI, UIEvent.PLAYER_CHANGE_IDENTITY, dto.userId);
         //发出声音
         Dispatch(AreaCode.AUDIO, AudioEvent.PLAY_EFFECT_AUDIO, "Fight/Woman_Order");
         //显示卡牌 
@@ -176,12 +194,12 @@ public class FightHandler : HandlerBase
         }
         else
         {
-            Dispatch(AreaCode.AUDIO,AudioEvent.PLAY_EFFECT_AUDIO, "Fight/Woman_NoOrder");
+            Dispatch(AreaCode.AUDIO, AudioEvent.PLAY_EFFECT_AUDIO, "Fight/Woman_NoOrder");
         }
         //如果是自身 就显示2个按钮 
         if (userId == Model.gameModel.UserDto.id)
         {
-            Dispatch(AreaCode.UI,UIEvent.SHOW_GRAB_BUTTON,true);
+            Dispatch(AreaCode.UI, UIEvent.SHOW_GRAB_BUTTON, true);
         }
     }
     /// <summary>
@@ -191,11 +209,11 @@ public class FightHandler : HandlerBase
     private void GetCards(List<CardDto> cardList)
     {
         //给自身玩家创建牌的对象 
-        Dispatch(AreaCode.CHARACTER,CharacterEvent.INIT_MY_CARD,cardList);
+        Dispatch(AreaCode.CHARACTER, CharacterEvent.INIT_MY_CARD, cardList);
         Dispatch(AreaCode.CHARACTER, CharacterEvent.INIT_LEFT_CARD, null);
         Dispatch(AreaCode.CHARACTER, CharacterEvent.INIT_RIGHT_CARD, null);
         //初始化倍数
-        Dispatch(AreaCode.UI,UIEvent.CHANGE_MUTIPLE,1);
+        Dispatch(AreaCode.UI, UIEvent.CHANGE_MUTIPLE, 1);
     }
 
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 设置面板
+/// </summary>
 public class SetPanel : UIBase 
 {
  private void Awake()
@@ -40,11 +43,11 @@ public class SetPanel : UIBase
 
     void ToggleClick(bool value)
     {
-        //TODO
+        Dispatch(AreaCode.AUDIO,AudioEvent.PLAY_BG_AUDIO,value);
     }
     void SldVolumeClick(float value)
     {
-        //TODO
+        Dispatch(AreaCode.AUDIO,AudioEvent.SET_AUDIO_VOLUME,value);
     }
     void BtnCloseClick()
     {

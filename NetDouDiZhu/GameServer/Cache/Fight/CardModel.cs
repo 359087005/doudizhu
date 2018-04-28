@@ -58,8 +58,8 @@ namespace GameServer.Cache.Fight
 
             foreach (CardDto card in CardQueue)
             {
-                int index = r.Next(0, newList.Count + 1);
-                newList.Insert(index, card);
+                int index = r.Next(0, newList.Count + 1); //第一次是只能随机0 第二次随机0,1 第三次随机0,1,2
+                newList.Insert(index, card);  //防止出现插入位置无东西
             }
             CardQueue.Clear();
 

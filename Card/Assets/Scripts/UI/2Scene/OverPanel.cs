@@ -14,13 +14,17 @@ public class OverPanel : UIBase
 {
     private void Awake()
     {
-
+        Bind(UIEvent.SHOW_OVER_PANEL);
     }
     public override void Execute(int eventCode, object message)
     {
-        switch (switch_on)
+        switch (eventCode)
         {
+            case UIEvent.SHOW_OVER_PANEL:
+                RefreshShow(message as OverDto);
+                break;
             default:
+                break;
         }
     }
 
@@ -35,6 +39,7 @@ public class OverPanel : UIBase
 
 
         btnBack.onClick.AddListener(BackClick);
+        SetPanelActive(false);
     }
     /// <summary>
     /// 返回点击事件
@@ -56,6 +61,7 @@ public class OverPanel : UIBase
     /// </summary>
     public void RefreshShow(OverDto dto)
     {
+        SetPanelActive(true);
         //显示谁胜利
         textWinIdrentity.text = Identity.GetString(dto.winIdentity);
         //判断自己是否胜利

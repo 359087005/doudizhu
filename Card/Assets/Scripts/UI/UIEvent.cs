@@ -34,5 +34,7 @@ public class UIEvent  {
 
     public const int HIDE_DEAL_BUTTON = 19;//关闭隐藏按钮
 
+
+    public const int SHOW_OVER_PANEL = 20; //展示结束面板
     public const int PROMPTA_ANIM = int.MaxValue;
 }

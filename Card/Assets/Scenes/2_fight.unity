@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 441891127}
   - component: {fileID: 441891129}
   - component: {fileID: 441891128}
+  - component: {fileID: 441891130}
   m_Layer: 5
   m_Name: OverPanel
   m_TagString: Untagged
@@ -722,6 +723,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 441891126}
+--- !u!114 &441891130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 441891126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e720388399cf943a189d6175abe39c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &461808772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,7 +2195,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -248721855
   m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!224 &1258905427
