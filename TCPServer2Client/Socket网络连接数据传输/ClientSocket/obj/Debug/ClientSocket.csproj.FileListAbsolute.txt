@@ -1,0 +1,5 @@
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\ClientSocket\bin\Debug\ClientSocket.exe.config
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\ClientSocket\bin\Debug\ClientSocket.exe
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\ClientSocket\bin\Debug\ClientSocket.pdb
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\ClientSocket\obj\Debug\ClientSocket.exe
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\ClientSocket\obj\Debug\ClientSocket.pdb

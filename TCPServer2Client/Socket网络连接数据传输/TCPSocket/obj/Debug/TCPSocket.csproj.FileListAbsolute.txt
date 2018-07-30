@@ -1,0 +1,6 @@
+D:\_ZHB\VSProject\TCPServer2Client\Socket网络连接数据传输\TCPSocket\bin\Debug\TCPSocket.exe.config
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\TCPSocket\bin\Debug\TCPSocket.exe.config
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\TCPSocket\bin\Debug\TCPSocket.exe
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\TCPSocket\bin\Debug\TCPSocket.pdb
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\TCPSocket\obj\Debug\TCPSocket.exe
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\TCPSocket\obj\Debug\TCPSocket.pdb

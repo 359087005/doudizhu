@@ -1,0 +1,1 @@
+D:\_ZHB\UnityProject\NetDouDiZhu\TCPServer2Client\Socket网络连接数据传输\GameServer\bin\Debug\GameServer.exe.config
