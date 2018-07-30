@@ -45,8 +45,10 @@ namespace AhpilyServer
                 for (int i = 0; i < maxCount; i++)
                 {
                     tmpClientPeer = new ClientPeer();
+                    tmpClientPeer.receiveArgs = new SocketAsyncEventArgs();
                     tmpClientPeer.receiveArgs.Completed += Receive_Completed;
                     tmpClientPeer.receiveArgs.UserToken = tmpClientPeer;
+                    tmpClientPeer.receiveCompleted += ReceiveCompleted;
                     clientPeerPool.EnQueue(tmpClientPeer);
                 }
 
@@ -170,6 +172,13 @@ namespace AhpilyServer
                     //TOOD
                 }
             }
+        }
+
+
+        private void ReceiveCompleted(ClientPeer client, object value)
+        {
+            //给应用层让其使用
+            //todo
         }
 
         #endregion
