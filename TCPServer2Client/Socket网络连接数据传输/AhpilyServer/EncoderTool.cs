@@ -116,7 +116,7 @@ namespace AhpilyServer
         #endregion
 
 
-        #region 
+        #region obj 转byte[]
         public static byte[] EncoderObj(object value)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -138,10 +138,6 @@ namespace AhpilyServer
                 return value;
             }
         }
-
-
-
-
         #endregion
     }
 }

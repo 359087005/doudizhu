@@ -20,7 +20,7 @@ namespace AhpilyServer
         {
 
         }
-        public SocketMsg(int opCode,int subCode,int value)
+        public SocketMsg(int opCode,int subCode,object value)
         {
             this.OpCode = opCode;
             this.SubCode = subCode;

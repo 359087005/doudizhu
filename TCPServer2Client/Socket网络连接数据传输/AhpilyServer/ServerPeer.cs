@@ -45,10 +45,10 @@ namespace AhpilyServer
                 for (int i = 0; i < maxCount; i++)
                 {
                     tmpClientPeer = new ClientPeer();
-                    tmpClientPeer.receiveArgs = new SocketAsyncEventArgs();
-                    tmpClientPeer.receiveArgs.Completed += Receive_Completed;
-                    tmpClientPeer.receiveArgs.UserToken = tmpClientPeer;
-                    tmpClientPeer.receiveCompleted += ReceiveCompleted;
+                    
+                    tmpClientPeer.ReceiveArgs.Completed += Receive_Completed;
+                    tmpClientPeer.snedDisconnect = DisConnect;
+                    tmpClientPeer.receiveCompleted = ReceiveCompleted;
                     clientPeerPool.EnQueue(tmpClientPeer);
                 }
 
@@ -112,10 +112,43 @@ namespace AhpilyServer
         #endregion
 
         #region 断开连接
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client">断开的连接对象</param>
+        /// <param name="reason"></param>
+        public void DisConnect(ClientPeer client,string reason)
+        {
+            try
+            {
+                //断开连接清空数据 包括clientpeer的缓存  socket对象 
+                if (client == null)
+                {
+                    throw new Exception("当前客户端为空，无法断开连接");
+                }
+
+                //通知应用层断开连接 TODO
+
+
+
+                client.DisConnect();
+                //连接池 回收
+                clientPeerPool.EnQueue(client);
+                //信号量  回复
+                acceptSemaphore.Release();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
 
         #endregion
 
         #region 发送数据
+        //根据客户端调用  所以这里不需要
+
 
         #endregion
 
@@ -125,10 +158,10 @@ namespace AhpilyServer
         {
             try
             {
-                bool result = client.clientSocket.ReceiveAsync(client.receiveArgs);
+                bool result = client.clientSocket.ReceiveAsync(client.ReceiveArgs);
                 if (result == false)
                 {
-                    ProcessReceive(client.receiveArgs);
+                    ProcessReceive(client.ReceiveArgs);
 
                 }
             }
@@ -147,35 +180,35 @@ namespace AhpilyServer
         {
             ClientPeer client = e.UserToken as ClientPeer;  //为什么这里不用e.acceptSocket
             ///判断网络消息是否接收成功
-            if (client.receiveArgs.SocketError == SocketError.Success && client.receiveArgs.BytesTransferred > 0)
+            if (client.ReceiveArgs.SocketError == SocketError.Success && client.ReceiveArgs.BytesTransferred > 0)
             {
                 //拷贝到数组中
-                byte[] packet = new byte[client.receiveArgs.BytesTransferred];
-                Buffer.BlockCopy(client.receiveArgs.Buffer, 0, packet, 0, client.receiveArgs.BytesTransferred);
+                byte[] packet = new byte[client.ReceiveArgs.BytesTransferred];
+                Buffer.BlockCopy(client.ReceiveArgs.Buffer, 0, packet, 0, client.ReceiveArgs.BytesTransferred);
 
                 client.StartReceive(packet);
 
                 StartReceive(client);
             }
             //断开连接   //无传输数据表示断开连接
-            else if (client.receiveArgs.BytesTransferred == 0)
+            else if (client.ReceiveArgs.BytesTransferred == 0)
             {
 
-                if (client.receiveArgs.SocketError == SocketError.Success)
+                if (client.ReceiveArgs.SocketError == SocketError.Success)
                 {
                     //客户端主动断开连接
-                    //TODO
+                    DisConnect(client,"客户端主动断开连接");
                 }
                 else
                 {
                     //由于网络异常 被动断开
-                    //TOOD
+                    DisConnect(client, client.ReceiveArgs.SocketError.ToString());
                 }
             }
         }
 
 
-        private void ReceiveCompleted(ClientPeer client, object value)
+        private void ReceiveCompleted(ClientPeer client, SocketMsg msg)
         {
             //给应用层让其使用
             //todo
